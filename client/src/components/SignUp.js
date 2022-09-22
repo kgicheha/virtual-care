@@ -1,6 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
+// import {useHistory} from 'react-router-dom'
 
 const SignUp = () => {
+  //storing data from the form
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    dob: "",
+    sex: "",
+    insurance: "",
+    mobile: "",
+    email: "",
+    password: "",
+  });
+
+  //to display the errors
+  // const [errors, setErrors] = useState([])
+
+  //gives you access to the history instance that you may use to navigate.
+  // const history = useHistory()
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormData(formData);
+    console.log(formData);
+
+    //make post request on submit
+    //    fetch(`/signup`,{
+    //     method: 'POST',
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "Accept": "application/json"
+    //     },
+    //     body: JSON.stringify(formData)
+    //   })
+    //   .then(res => {
+    //     if(res.ok){
+    //         res.json().then(user => {
+    //             updateUser(user)
+    //             history.push(`/users/${user.id}`)
+    //         })
+    //     }else {
+    //         res.json().then(json => setErrors(Object.entries(json.errors)))
+    //     }
+    // })
+
+    //reset form
+    setFormData({
+      first_name: "",
+      last_name: "",
+      dob: "",
+      sex: "",
+      insurance: "",
+      mobile: "",
+      email: "",
+      password: "",
+    });
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
       <div id="signup">
@@ -8,16 +69,19 @@ const SignUp = () => {
           <img src={require("../Assets/logoonly.png")} alt="Logo" height="40" />
           <img src={require("../Assets/appname.png")} alt="name" height="40" />
         </div>
-        <form id="signupform">
+        <form id="signupform" onSubmit={handleSubmit}>
           <br />
           <h3>Create profile</h3>
+          {/* {errors?errors.map(e => <div>{e[0]+': ' + e[1]}</div>):null} */}
           <label for="fname">First Name</label>
           <br />
           <input
             type="text"
-            id="fname"
-            name="fname"
+            id="first_name"
+            name="first_name"
             className="forminput"
+            value={formData.first_name}
+            onChange={handleChange}
             placeholder="First Name*"
           />
           <br />
@@ -25,9 +89,11 @@ const SignUp = () => {
           <br />
           <input
             type="text"
-            id="lname"
-            name="lname"
+            id="last_name"
+            name="last_name"
             className="forminput"
+            value={formData.last_name}
+            onChange={handleChange}
             placeholder="Last Name*"
           />
           <br />
@@ -38,34 +104,50 @@ const SignUp = () => {
             id="dob"
             name="dob"
             className="forminput"
+            value={formData.dob}
+            onChange={handleChange}
             placeholder="MM/DD/YYYY"
           />
           <br />
           <label for="sex">Sex</label>
           <br />
-          <select id="sex" name="sex" className="forminput">
+          <select
+            id="sex"
+            name="sex"
+            className="forminput"
+            value={formData.sex}
+            onChange={handleChange}
+          >
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
           <br />
           <label for="insurance">Current Insurance</label>
           <br />
-          <select id="insurance" name="insurance" className="forminput">
-            <option value="united health">United Health</option>
-            <option value="kaiser foundation">Kaiser Foundation</option>
-            <option value="blue cross blue shield ">
+          <select
+            id="insurance"
+            name="insurance"
+            className="forminput"
+            value={formData.insurance}
+            onChange={handleChange}
+          >
+            <option value="United Health">United Health</option>
+            <option value="Kaiser Foundation">Kaiser Foundation</option>
+            <option value="Blue Cross Blue Shield ">
               Blue Cross Blue Shield
             </option>
-            <option value="kaiser foundation">Kaiser Foundation</option>
+            <option value="Independence Health Group">Independence Health Group</option>
           </select>
           <br />
           <label for="mobile">Mobile</label>
           <br />
           <input
             type="text"
-            id=""
+            id="mobile"
             name="mobile"
             className="forminput"
+            value={formData.mobile}
+            onChange={handleChange}
             placeholder="XXX-XXX-XXXX"
           />
           <br />
@@ -73,19 +155,23 @@ const SignUp = () => {
           <br />
           <input
             type="text"
-            id=""
+            id="email"
             name="email"
             className="forminput"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="example@gmail.com"
           />
           <br />
           <label for="password">Password</label>
           <br />
           <input
-            type="text"
-            id=""
+            type="password"
+            id="password"
             name="password"
             className="forminput"
+            value={formData.password}
+            onChange={handleChange}
             placeholder="*********"
           />
           <br />

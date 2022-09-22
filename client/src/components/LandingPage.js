@@ -3,15 +3,6 @@ import React from "react";
 const LandingPage = () => {
   return (
     <>
-      <div id="header">
-        <div>
-          <img src={require("../Assets/logo.png")} alt="Logo" height="200" />
-        </div>
-        <div>
-          <button id="signinbutton">Sign In</button>
-        </div>
-      </div>
-
       <div id="midsection">
         <div id="mission">
           <h2>Visit with a doctor 24/7</h2>

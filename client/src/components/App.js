@@ -2,12 +2,14 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import LandingPage from "./LandingPage";
 import Login from "./Login";
+import NavBar from "./NavBar";
 import SignUp from "./SignUp";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
+      <NavBar/>
         <Switch>
           <Route path="/login">
             <Login/>

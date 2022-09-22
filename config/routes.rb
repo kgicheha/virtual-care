@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :appointments
+  resources :doctors
+  resources :patients
   get '/hello', to: 'application#hello_world'
   get '*path',
       to: 'fallback#index',
