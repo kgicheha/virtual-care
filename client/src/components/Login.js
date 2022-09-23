@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import SignUp from "./SignUp";
 
 const Login = ({ updateUser }) => {
-  const [login, setLogin] = useState(true);
-
   //storing data from the form
   const [formData, setFormData] = useState({
     email: "",
@@ -51,11 +48,7 @@ const Login = ({ updateUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleClick = () => {
-    setLogin(!login);
-  };
-
-  return login ? (
+  return (
     <>
       <div id="login">
         <div className="logosection">
@@ -91,10 +84,7 @@ const Login = ({ updateUser }) => {
           <input type="submit" className="submit" value="Sign in"></input>
           <h3>
             New to Virtual Care?
-            <a
-              id="signuplink"
-              onClick={handleClick}
-            >
+            <a id="signuplink" href="/signup">
               {" "}
               Create an account
             </a>
@@ -102,8 +92,6 @@ const Login = ({ updateUser }) => {
         </form>
       </div>
     </>
-  ) : (
-    <SignUp />
   );
 };
 
