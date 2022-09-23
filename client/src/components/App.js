@@ -4,7 +4,6 @@ import HomePage from "./HomePage";
 import LandingPage from "./LandingPage";
 import Login from "./Login";
 import NavBar from "./NavBar";
-import SignUp from "./SignUp";
 
 function App() {
   const [currentUser, setCurrentUser] = useState("");
@@ -36,9 +35,6 @@ function App() {
         <Switch>
           <Route path="/login">
             <Login updateUser={updateUser} />
-          </Route>
-          <Route path="/signup">
-            <SignUp updateUser={updateUser}/>
           </Route>
           <Route path="/home">
             <HomePage results={results} currentUser={currentUser} />

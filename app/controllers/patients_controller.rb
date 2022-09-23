@@ -16,9 +16,19 @@ class PatientsController < ApplicationController
         render json: patient, status: :ok
     end
 
+    def update
+      patient = find_patient
+      patient.update(patient_params)
+      render json: patient, status: :accepted
+    end
+
     private
 
     def patient_params
         params.permit(:first_name, :last_name, :dob, :sex, :health_insurance, :mobile, :email, :password)
+    end
+
+    def find_patient
+        patient = Patient.find(params[:id])
     end
 end

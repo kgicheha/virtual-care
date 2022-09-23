@@ -15,23 +15,20 @@ const NavBar = ({ currentUser, updateUser }) => {
 
 
   return (
-    <>
+    !currentUser === "" ? (
+      <>
       <div>
         <img src={require("../Assets/logo.png")} alt="Logo" height="200" />
       </div>
-      {currentUser ? (
         <div>
           <Link id="signoutbutton" onClick={handleLogOut}>
             Sign Out
           </Link>
         </div>
-      ) : (
-        <div>
-          <Link id="signinbutton" to="/login">Sign In</Link>
-        </div>
-      )}
-    </>
-  );
+      </>
+      ) : null
+
+  )
 };
 
 export default NavBar;

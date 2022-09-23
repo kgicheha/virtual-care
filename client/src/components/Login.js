@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import SignUp from "./SignUp";
 
-const Login = ({updateUser}) => {
+const Login = ({ updateUser }) => {
+  const [login, setLogin] = useState(true);
 
   //storing data from the form
   const [formData, setFormData] = useState({
@@ -20,24 +22,23 @@ const Login = ({updateUser}) => {
     setFormData(formData);
 
     // make post request on submit
-       fetch(`/login`,{
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(formData)
-      })
-      .then(res => {
-        if(res.ok){
-            res.json().then(user => {
-                updateUser(user)
-                history.push(`/home/${user.id}`)
-            })
-        }else {
-            res.json().then(json => setErrors(json.errors))
-        }
-    })
+    fetch(`/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formData),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((user) => {
+          updateUser(user);
+          history.push(`/home/${user.id}`);
+        });
+      } else {
+        res.json().then((json) => setErrors(json.errors));
+      }
+    });
 
     //reset form
     setFormData({
@@ -49,7 +50,12 @@ const Login = ({updateUser}) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  return (
+
+  const handleClick = () => {
+    setLogin(!login);
+  };
+
+  return login ? (
     <>
       <div id="login">
         <div className="logosection">
@@ -59,7 +65,7 @@ const Login = ({updateUser}) => {
         <form id="loginform" onSubmit={handleSubmit}>
           <br />
           <h3>Sign in</h3>
-           {errors? <div className="displayederrors">{errors}</div>:null}
+          {errors ? <div className="displayederrors">{errors}</div> : null}
           <input
             type="text"
             id="email"
@@ -85,7 +91,10 @@ const Login = ({updateUser}) => {
           <input type="submit" className="submit" value="Sign in"></input>
           <h3>
             New to Virtual Care?
-            <a id="signuplink" href="/SignUp">
+            <a
+              id="signuplink"
+              onClick={handleClick}
+            >
               {" "}
               Create an account
             </a>
@@ -93,6 +102,8 @@ const Login = ({updateUser}) => {
         </form>
       </div>
     </>
+  ) : (
+    <SignUp />
   );
 };
 
