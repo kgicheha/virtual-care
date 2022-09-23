@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const Login = () => {
+const Login = ({updateUser}) => {
 
   //storing data from the form
   const [formData, setFormData] = useState({
@@ -10,34 +10,34 @@ const Login = () => {
   });
 
   //to display the errors
-//   const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   //gives you access to the history instance that you may use to navigate.
-//   const history = useHistory();
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormData(formData);
 
-    //make post request on submit
-    //    fetch(`/login`,{
-    //     method: 'POST',
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "Accept": "application/json"
-    //     },
-    //     body: JSON.stringify(formData)
-    //   })
-    //   .then(res => {
-    //     if(res.ok){
-    //         res.json().then(user => {
-    //             updateUser(user)
-    //             history.push(`/users/${user.id}`)
-    //         })
-    //     }else {
-    //         res.json().then(json => setErrors(json.errors))
-    //     }
-    // })
+    // make post request on submit
+       fetch(`/login`,{
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(res => {
+        if(res.ok){
+            res.json().then(user => {
+                updateUser(user)
+                history.push(`/home/${user.id}`)
+            })
+        }else {
+            res.json().then(json => setErrors(json.errors))
+        }
+    })
 
     //reset form
     setFormData({
@@ -59,7 +59,7 @@ const Login = () => {
         <form id="loginform" onSubmit={handleSubmit}>
           <br />
           <h3>Sign in</h3>
-          {/*  {errors? <div>{errors}</div>:null} */}
+           {errors? <div className="displayederrors">{errors}</div>:null}
           <input
             type="text"
             id="email"

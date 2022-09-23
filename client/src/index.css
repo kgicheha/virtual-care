@@ -21,6 +21,13 @@ code {
     background-color: hsl(0, 0%, 93%);
   }
 
+.displayederrors {
+  color: #f35757;
+}
+
+#signoutbutton {
+  background-color: #ffffff;
+}
 
 
 /* Landing page CSS */
