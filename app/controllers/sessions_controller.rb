@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     end
 
     def destroy
-        session.delete :patient_id
+        session.delete (:patient_id)
         head :no_content
     end
 end

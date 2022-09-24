@@ -8,22 +8,28 @@ const NavBar = ({ currentUser, updateUser }) => {
     fetch("/logout", {
       method: "DELETE",
     });
-    updateUser("");
+    updateUser(null);
     history.push("/"); // redirect user to home page after logging out
   };
 
-  return !currentUser === "" ? (
-    <>
-      <div>
-        <img src={require("../Assets/logo.png")} alt="Logo" height="200" />
-      </div>
-      <div>
-        <Link id="signoutbutton" onClick={handleLogOut}>
-          Sign Out
-        </Link>
-      </div>
-    </>
-  ) : null;
+  return (
+    <div>
+      {currentUser === null ? (
+        <></>
+      ) : (
+        <>
+          <div>
+            <img src={require("../Assets/logo.png")} alt="Logo" height="200" />
+          </div>
+          <div>
+            <button id="signoutbutton" onClick={handleLogOut}>
+              Sign Out
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default NavBar;

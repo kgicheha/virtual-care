@@ -7,8 +7,8 @@ import NavBar from "./NavBar";
 import SignUp from "./SignUp";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState("");
-  const updateUser = (user) => setCurrentUser(user);
+  const [currentUser, setCurrentUser] = useState(null);
+  // const updateUser = (user) => setCurrentUser(user);
   const [results, setResults] = useState([]);
 
   //get patients session
@@ -20,7 +20,7 @@ function App() {
       });
   }, []);
 
-  //
+  //fetch doctors records
   useEffect(() => {
     fetch(`/doctors`)
       .then((res) => res.json())
@@ -32,13 +32,13 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <NavBar currentUser={currentUser} updateUser={updateUser} />
+        <NavBar currentUser={currentUser} updateUser={setCurrentUser} />
         <Switch>
           <Route path="/login">
-            <Login updateUser={updateUser} />
+            <Login updateUser={setCurrentUser} />
           </Route>
           <Route path="/signup">
-            <SignUp updateUser={updateUser} />
+            <SignUp updateUser={setCurrentUser} />
           </Route>
           <Route path="/home">
             <HomePage results={results} currentUser={currentUser} />

@@ -3,7 +3,7 @@ class PatientsController < ApplicationController
 
     def show
         patient = Patient.find_by(id: session[:patient_id])
-        if user
+        if patient
           render json: patient
         else
           render json: { error: "Not authorized" }, status: :unauthorized
