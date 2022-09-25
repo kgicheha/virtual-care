@@ -1,39 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import DoctorContainer from "./DoctorContainer";
 
-const HomePage = ({ results, currentUser, onSubmit }) => {
-    //use to search doctors name or specialty
-    const [formData, setFormData] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
+const HomePage = ({ results, setSearchWord }) => {
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setSearchWord(e.target.value);
   };
 
   return (
     <>
       <div>
         <h2>Book Appointment Today</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            id="fname"
-            name="fname"
-            onChange={handleChange}
-            placeholder="Search by Doctor's name or Specialty"
-          />
-          <br />
-          <input type="submit" value="Search"></input>
-        </form>
+
+        <input
+          type="text"
+          className="searchTerm"
+          onChange={handleChange}
+          placeholder="Search by Doctor's Name or Specialty"
+        />
+        <br />
+        {/* <input type="submit" value="Search"></input> */}
       </div>
       <div>
         <h3>Select a doctor of your choice</h3>
       </div>
-      <DoctorContainer results= {results}/>
+      <DoctorContainer results={results} />
     </>
   );
 };

@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 import SignUp from "./SignUp";
 
 function App() {
+  const [searchWord, setSearchWord] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   // const updateUser = (user) => setCurrentUser(user);
   const [results, setResults] = useState([]);
@@ -29,6 +30,18 @@ function App() {
       });
   }, []);
 
+  //search functionality
+  const SearchTerm = results.filter((result) => {
+    if (searchWord === "") return true;
+    else if (
+      result.first_name.toLowerCase().includes(searchWord.toLowerCase()) ||
+      result.last_name.toLowerCase().includes(searchWord.toLowerCase()) ||
+      result.specialty.toLowerCase().includes(searchWord.toLowerCase())
+    ) {
+      return true;
+    }
+  });
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -41,7 +54,11 @@ function App() {
             <SignUp updateUser={setCurrentUser} />
           </Route>
           <Route path="/home">
-            <HomePage results={results} currentUser={currentUser} />
+            <HomePage
+              setSearchWord={setSearchWord}
+              results={SearchTerm}
+              currentUser={currentUser}
+            />
           </Route>
           <Route path="/">
             <LandingPage />

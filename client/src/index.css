@@ -91,3 +91,13 @@ code {
   background-color: #ffffff;
   text-align: center;
 }
+
+/* HomePage */
+#visitdoc {
+  background-color: #f35757;
+  color: #ffffff;
+}
+
+#ratingstars {
+  color: #32CD32;
+}

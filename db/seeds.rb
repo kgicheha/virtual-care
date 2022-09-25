@@ -18,14 +18,14 @@ uni = ["University of Delaware", "Harvard Medical School", "New York University"
 
     Doctor.create(
         first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-        address: Faker::Address.street_address, state: Faker::Address.state ,
+        address: Faker::Address.street_address, state: Faker::Address.state_abbr ,
         city: Faker::Address.city,  zipcode: Faker::Address.zip_code ,
         email: Faker::Internet.email ,
         specialty: special.sample,
         image_url: "https://t3.ftcdn.net/jpg/03/46/83/96/240_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
         years_experience: rand(1...35), mobile: Faker::PhoneNumber.cell_phone,
          university: uni.sample ,
-        hourly_rate: rand(30...150)
+        hourly_rate: rand(30...150), rating: rand(3...5), total_reviews: rand(3...1000)
         )
 end
 

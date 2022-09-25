@@ -2,7 +2,7 @@ class DoctorsController < ApplicationController
     skip_before_action :authenticate_patient, only: [:index, :show]
 
     def index
-        doctors = Doctor.all
+        doctors = Doctor.all.order(rating: :desc)
         render json: doctors, status: :ok
     end
 
