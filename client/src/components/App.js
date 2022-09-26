@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import BookAppointment from "./BookAppointment";
 import HomePage from "./HomePage";
 import LandingPage from "./LandingPage";
 import Login from "./Login";
@@ -31,11 +32,13 @@ function App() {
   }, []);
 
   //search functionality
+  // eslint-disable-next-line
   const SearchTerm = results.filter((result) => {
     if (searchWord === "") return true;
     else if (
       result.first_name.toLowerCase().includes(searchWord.toLowerCase()) ||
       result.last_name.toLowerCase().includes(searchWord.toLowerCase()) ||
+      result.state.toLowerCase().includes(searchWord.toLowerCase()) ||
       result.specialty.toLowerCase().includes(searchWord.toLowerCase())
     ) {
       return true;
@@ -52,6 +55,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignUp updateUser={setCurrentUser} />
+          </Route>
+          <Route path="/bookappt">
+            <BookAppointment updateUser={setCurrentUser} />
           </Route>
           <Route path="/home">
             <HomePage

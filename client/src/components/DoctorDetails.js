@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import BookAppointment from "./BookAppointment";
 import DoctorProfile from "./DoctorProfile";
+// import { Link } from "react-router-dom";
 
 const DoctorDetails = ({ result }) => {
   const {
+    id,
     image_url,
     first_name,
     last_name,
@@ -14,6 +17,7 @@ const DoctorDetails = ({ result }) => {
   } = result;
 
   const [docProfile, showdocProfile] = useState(false);
+  const [bookAppt, showBookAppt] = useState(false)
 
   const ratingDisplay = () => {
     let ratingArr = [];
@@ -28,12 +32,18 @@ const DoctorDetails = ({ result }) => {
       case 5:
         ratingArr.push("★★★★★");
         break;
+      default:
+        <p>"no reviews"</p>;
     }
     return ratingArr;
   };
 
   const handleProfile = () => {
     showdocProfile(!docProfile);
+  };
+
+  const handleAppts = () => {
+    showBookAppt(!bookAppt)
   };
 
   return (
@@ -54,7 +64,10 @@ const DoctorDetails = ({ result }) => {
         <h4 id="ratingstars">{ratingDisplay()}</h4>
         <h4>({total_reviews} reviews)</h4>
       </div>
-      <button id="visitdoc">Book</button>
+      <button id="visitdoc" onClick={handleAppts}>
+        Book
+      </button>
+      {bookAppt ? <BookAppointment docId={id}/> : null}
     </>
   );
 };

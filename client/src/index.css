@@ -31,24 +31,15 @@ code {
 
 
 /* Landing page CSS */
-#signinbutton {
-  background-color: #ffffff;
-}
 
-#midsection {
-  background-color: #e5e8f1;
-}
-#continuebutton {
-  background-color: #f35757;
-  color: #ffffff;
-  font-weight: bold;
-}
-#reviewsection h2 {
-  color: #0f3c6b;
-}
+
 #midsection h2 {
   color: #0f3c6b;
 }
+#reviewsection h3 {
+  color: #0f3c6b;
+}
+
 #bottomsection {
   background-color: #000000;
   color: #ffffff;
@@ -100,4 +91,14 @@ code {
 
 #ratingstars {
   color: #32CD32;
+}
+
+/* Appointment Page */
+#apptheader {
+  background-color: #E5E8F1;
+}
+
+#apptform {
+  background-color: #ffffff;
+  text-align: center;
 }

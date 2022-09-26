@@ -14,7 +14,7 @@ puts "Done Seeding Patient"
 puts "Seeding Doctor"
 special = ["Therapist", "Family Physician", "Emergency Physician", "Psychiatrist", "Neurologist", "Pediatrician",  "Cardiologist"]
 uni = ["University of Delaware", "Harvard Medical School", "New York University", "Columbia University", "Johns Hopkins University", "University of California--San Francisco"]
-20.times do
+100.times do
 
     Doctor.create(
         first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,

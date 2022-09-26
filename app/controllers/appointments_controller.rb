@@ -10,6 +10,11 @@ class AppointmentsController < ApplicationController
         render json: appointment, status: :ok
     end
 
+    def create
+        appoinment = Appointment.create!(appt_params)
+        render json: appoinment, status: :ok
+    end
+
     def update
         appointment = find_appt
         appointment.update(appt_params)
