@@ -81,7 +81,7 @@ const SignUp = ({ updateUser }) => {
     <>
       <CssBaseline />
       <div className={classes.signup}>
-        <Stack spacing={2}>
+        <Stack spacing={2} >
           <Container maxWidth="max-content">
             <img
               src={require("../Assets/logoonly.png")}
@@ -94,7 +94,7 @@ const SignUp = ({ updateUser }) => {
               height="40"
             />
           </Container>
-          <Container className={classes.loginForm}>
+          <Container className={classes.form}>
             <br />
             <br />
             <Typography variant="h6">Create profile</Typography>
@@ -220,7 +220,6 @@ const SignUp = ({ updateUser }) => {
               <Typography variant="subtitle1">
                 By continuing, I agree to the Privacy Policy and Terms of Use.
               </Typography>
-              <br />
               <br />
               <Button
                 type="submit"

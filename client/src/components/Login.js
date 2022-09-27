@@ -79,7 +79,7 @@ const Login = ({ updateUser }) => {
             />
           </Container>
 
-          <Container className={classes.loginForm}>
+          <Container className={classes.form}>
             <br />
             <br />
             <Typography variant="h6">Sign in</Typography>

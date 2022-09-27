@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   displayedErrors: {
     color: '#f35757'
   },
+  form: {
+    backgroundColor: '#ffffff',
+  },
 
   //LANDING PAGE
   logo: {
@@ -81,10 +84,9 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
-  loginForm: {
-    backgroundColor: '#ffffff',
-  },
+
 
   //SIGN UP
   signup: {
@@ -96,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
 }));
 
