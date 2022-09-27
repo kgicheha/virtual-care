@@ -1,7 +1,21 @@
 import React, { useState } from "react";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
+import Stack from "@mui/material/Stack";
+import {
+  Typography,
+  Button,
+  CssBaseline,
+  Container,
+  FormControl,
+  InputLabel,
+  Input,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
+import useStyles from "./styles";
 
-const SignUp = ({updateUser}) => {
+const SignUp = ({ updateUser }) => {
+  const classes = useStyles();
 
   //storing data from the form
   const [formData, setFormData] = useState({
@@ -16,10 +30,10 @@ const SignUp = ({updateUser}) => {
   });
 
   //to display the errors
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState([]);
 
   //gives you access to the history instance that you may use to navigate.
-  const history = useHistory()
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,24 +41,23 @@ const SignUp = ({updateUser}) => {
     console.log(formData);
 
     // make post request on submit
-       fetch(`/signup`,{
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(formData)
-      })
-      .then(res => {
-        if(res.ok){
-            res.json().then(user => {
-                updateUser(user)
-                history.push(`/login`)
-            })
-        }else {
-            res.json().then(json => setErrors(Object.entries(json.errors)))
-        }
-    })
+    fetch(`/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formData),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((user) => {
+          updateUser(user);
+          history.push(`/login`);
+        });
+      } else {
+        res.json().then((json) => setErrors(Object.entries(json.errors)));
+      }
+    });
 
     //reset form
     // setFormData({
@@ -63,137 +76,172 @@ const SignUp = ({updateUser}) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
   return (
     <>
-      <div id="signup">
-        <div className="logosection">
-          <img src={require("../Assets/logoonly.png")} alt="Logo" height="40" />
-          <img src={require("../Assets/appname.png")} alt="name" height="40" />
-        </div>
-        <form id="signupform" onSubmit={handleSubmit}>
-          <br />
-          <h3>Create profile</h3>
-          {errors?errors.map(e => <div className="displayederrors">{e[0]+': ' + e[1]}</div>):null}
-          <label for="fname">First Name</label>
-          <br />
-          <input
-            type="text"
-            id="first_name"
-            name="first_name"
-            className="forminput"
-            value={formData.first_name}
-            onChange={handleChange}
-            placeholder="First Name*"
-          />
-          <br />
-          <label for="lname">Last Name</label>
-          <br />
-          <input
-            type="text"
-            id="last_name"
-            name="last_name"
-            className="forminput"
-            value={formData.last_name}
-            onChange={handleChange}
-            placeholder="Last Name*"
-          />
-          <br />
-          <label for="lname">Date of birth</label>
-          <br />
-          <input
-            type="text"
-            id="dob"
-            name="dob"
-            className="forminput"
-            value={formData.dob}
-            onChange={handleChange}
-            placeholder="MM/DD/YYYY"
-          />
-          <br />
-          <label for="sex">Sex</label>
-          <br />
-          <select
-            id="sex"
-            name="sex"
-            className="forminput"
-            value={formData.sex}
-            onChange={handleChange}
-          >
-            <option value="select">Select</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-          <br />
-          <label for="health_insurance">Current Insurance</label>
-          <br />
-          <select
-            id="health_insurance"
-            name="health_insurance"
-            className="forminput"
-            value={formData.insurance}
-            onChange={handleChange}
-          >
-            <option value="Select">Select</option>
-            <option value="United Health">United Health</option>
-            <option value="Kaiser Foundation">Kaiser Foundation</option>
-            <option value="Blue Cross Blue Shield">
-              Blue Cross Blue Shield
-            </option>
-            <option value="Independence Health Group">Independence Health Group</option>
-          </select>
-          <br />
-          <label for="mobile">Mobile</label>
-          <br />
-          <input
-            type="text"
-            id="mobile"
-            name="mobile"
-            className="forminput"
-            value={formData.mobile}
-            onChange={handleChange}
-            placeholder="XXX-XXX-XXXX"
-          />
-          <br />
-          <label for="email">Email</label>
-          <br />
-          <input
-            type="text"
-            id="email"
-            name="email"
-            className="forminput"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="example@gmail.com"
-          />
-          <br />
-          <label for="password">Password</label>
-          <br />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="forminput"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="*********"
-          />
-          <br />
-          <h5>
-            By continuing, I agree to the Privacy Policy and Terms of Use.{" "}
-          </h5>
-          <input
-            type="submit"
-            className="submit"
-            value="Create Account"
-          ></input>
-          <h3>
-            Already have an an account?
-            <a id="signuplink" href="/login">
-              {" "}
-              Sign in
-            </a>
-          </h3>
-        </form>
+      <CssBaseline />
+      <div className={classes.signup}>
+        <Stack spacing={2}>
+          <Container maxWidth="max-content">
+            <img
+              src={require("../Assets/logoonly.png")}
+              alt="Logo"
+              height="40"
+            />
+            <img
+              src={require("../Assets/appname.png")}
+              alt="name"
+              height="40"
+            />
+          </Container>
+          <Container className={classes.loginForm}>
+            <br />
+            <br />
+            <Typography variant="h6">Create profile</Typography>
+            {errors
+              ? errors.map((e) => (
+                  <div className={classes.displayedErrors}>
+                    {e[0] + ": " + e[1]}
+                  </div>
+                ))
+              : null}
+            <form onSubmit={handleSubmit}>
+              <FormControl>
+                <InputLabel>First Name*</InputLabel>
+                <Input
+                  aria-describedby="my-helper-text"
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <br />
+              <FormControl>
+                <InputLabel>Last Name*</InputLabel>
+                <Input
+                  aria-describedby="my-helper-text"
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <br />
+              <FormControl>
+                <InputLabel>Date of birth*</InputLabel>
+                <Input
+                  aria-describedby="my-helper-text"
+                  type="text"
+                  id="dob"
+                  name="dob"
+                  value={formData.dob}
+                  onChange={handleChange}
+                  placeholder="MM/DD/YYYY"
+                />
+              </FormControl>
+              <br />
+              <FormControl style={{minWidth: 165}}>
+                <InputLabel>Sex*</InputLabel>
+                <Select
+                  id="sex"
+                  name="sex"
+                  value={formData.sex}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl style={{minWidth: 165}}>
+                <InputLabel>Current Insurance*</InputLabel>
+                <Select
+                  id="health_insurance"
+                  name="health_insurance"
+                  value={formData.health_insurance}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="United Health">United Health</MenuItem>
+                  <MenuItem value="Kaiser Foundation">
+                    Kaiser Foundation
+                  </MenuItem>
+                  <MenuItem value="Blue Cross Blue Shield">
+                    Blue Cross Blue Shield
+                  </MenuItem>
+                  <MenuItem value="Independence Health Group">
+                    Independence Health Group
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl>
+                <InputLabel>Mobile*</InputLabel>
+                <Input
+                  aria-describedby="my-helper-text"
+                  type="text"
+                  id="mobile"
+                  name="mobile"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                  placeholder="XXX-XXX-XXXX"
+                />
+              </FormControl>
+              <br />
+              <FormControl>
+                <InputLabel>Email Address*</InputLabel>
+                <Input
+                  aria-describedby="my-helper-text"
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="example@gmail.com"
+                />
+              </FormControl>
+              <br />
+              <FormControl>
+                <InputLabel>Password*</InputLabel>
+                <Input
+                  aria-describedby="my-helper-text"
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="*********"
+                />
+              </FormControl>
+              <br />
+              <br />
+              <Typography variant="subtitle1">
+                By continuing, I agree to the Privacy Policy and Terms of Use.
+              </Typography>
+              <br />
+              <br />
+              <Button
+                type="submit"
+                className={classes.button}
+                size="large"
+                variant="contained"
+              >
+                Create Account
+              </Button>
+              <br />
+              <br />
+              <Typography variant="subtitle1">
+                Already have an an account?
+                <a id="signuplink" href="/login">
+                  {" "}
+                  Sign in
+                </a>
+              </Typography>
+            </form>
+          </Container>
+        </Stack>
       </div>
     </>
   );

@@ -3,6 +3,17 @@ import { red } from "@mui/material/colors";
 
 const useStyles = makeStyles((theme) => ({
   //GLOBAL
+  button: {
+    fontWeight: "bold",
+    backgroundColor: "#f35757",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: red[700],
+    },
+  },
+  displayedErrors: {
+    color: '#f35757'
+  },
 
   //LANDING PAGE
   logo: {
@@ -19,13 +30,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: red[700],
     },
   },
-  button: {
-    backgroundColor: "#f35757",
-    color: "#ffffff",
-    "&:hover": {
-      backgroundColor: red[700],
-    },
-  },
+
   midSection: {
     backgroundColor: "#e5e8f1",
   },
@@ -79,7 +84,19 @@ const useStyles = makeStyles((theme) => ({
   },
   loginForm: {
     backgroundColor: '#ffffff',
-  }
+  },
+
+  //SIGN UP
+  signup: {
+    marginTop: "20px",
+    backgroundColor: "hsl(0, 0%, 93%)",
+    opacity: "0.8",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+  },
 }));
 
 export default useStyles;
