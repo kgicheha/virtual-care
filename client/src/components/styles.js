@@ -2,9 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@mui/material/colors";
 
 const useStyles = makeStyles((theme) => ({
-
   //GLOBAL
-
 
   //LANDING PAGE
   logo: {
@@ -43,27 +41,44 @@ const useStyles = makeStyles((theme) => ({
 
   //card data
   cardGrid: {
-    padding:"20px",
+    padding: "60px",
+    alignContent: "center",
+    // marginLeft: "200px"
   },
   card: {
     backgroundColor: "#ededed",
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
     borderRadius: "25px",
   },
   cardContent: {
     flexGrow: 1,
   },
   stars: {
-    color: "#FFBF00"
+    color: "#FFBF00",
   },
 
   footer: {
     marginTop: "60px",
-    backgroundColor: '#000000',
-    color: '#ffffff',
+    backgroundColor: "#000000",
+    color: "#ffffff",
     padding: "80px",
+  },
+
+  //LOG IN
+  login: {
+    marginTop: "20px",
+    backgroundColor: "hsl(0, 0%, 93%)",
+    opacity: "0.8",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+  },
+  loginForm: {
+    backgroundColor: '#ffffff',
   }
 }));
 

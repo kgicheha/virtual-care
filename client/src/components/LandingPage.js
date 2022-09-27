@@ -1,60 +1,21 @@
 import React from "react";
-// import { Link } from "react-router-dom";
-import { Stack } from "@mui/material";
+
 import {
   Typography,
   AppBar,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   CssBaseline,
   Grid,
   Toolbar,
   Container,
 } from "@material-ui/core";
 import useStyles from "./styles";
+import ReviewSamples from "./ReviewSamples";
 
 const LandingPage = () => {
   const classes = useStyles();
 
-  const reviews = [
-    {
-      name: "John Doe",
-      rating: "★★★★★",
-      when: "2 Weeks Ago",
-      comment: "Easy to use and doctor was very professional"
-    },
-    {
-      name: "Jane Doe",
-      rating: "★★★★★",
-      when: "1 Month Ago",
-      comment: "Easy to use and doctor was very professional"
-    },
-    {
-      name: "John Doe",
-      rating: "★★★★★",
-      when: "1 Month Ago",
-      comment: "Great Service! Doctors are very professional"
-    },
-    {
-      name: "Jane Doe",
-      rating: "★★★★★",
-      when: "2 Month Ago",
-      comment: "Very Satisfied!"
-    }
-  ]
 
-
-  //       <div id="bottomsection">
-  //         <h4>
-  //           © 2022 Virtual Care. All Rights Reserved | 111 Ocean Drive, San
-  //           Fransisco, CA 94111
-  //         </h4>
-  //       </div>
-  //     </>
-  //   );
 
   return (
     <>
@@ -83,7 +44,7 @@ const LandingPage = () => {
             <Typography variant="h2">
               Visit with a <br></br> doctor 24/7
             </Typography>
-            <Typography variant="h7">
+            <Typography variant="p">
               Get expert advice, presciptions, and access to your medical
               records
             </Typography>
@@ -117,20 +78,7 @@ const LandingPage = () => {
           </Typography>
           <Container className={classes.cardGrid} maxWidth="max-content">
             <Grid container spacing={4} >
-            {
-              reviews.map((review)=> (
-              <Grid item xs={12} sm={6} md={4} lg={2}>
-                <Card className={classes.card} >
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h6">{review.name}</Typography>
-                    <Typography gutterBottom variant="h6" className={classes.stars}>{review.rating}</Typography>
-                    <Typography gutterBottom variant="p">{review.when}</Typography>
-                    <Typography gutterBottom variant="h6">{review.comment}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              ))
-            }
+            <ReviewSamples />
             </Grid>
           </Container>
         </div>

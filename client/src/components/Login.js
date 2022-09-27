@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Stack from "@mui/material/Stack";
+import {
+  Typography,
+  Button,
+  CssBaseline,
+  Container,
+  FormControl,
+  InputLabel,
+  Input,
+} from "@material-ui/core";
+import useStyles from "./styles";
 
 const Login = ({ updateUser }) => {
+  const classes = useStyles();
+
   //storing data from the form
   const [formData, setFormData] = useState({
     email: "",
@@ -50,46 +63,73 @@ const Login = ({ updateUser }) => {
 
   return (
     <>
-      <div id="login">
-        <div className="logosection">
-          <img src={require("../Assets/logoonly.png")} alt="Logo" height="40" />
-          <img src={require("../Assets/appname.png")} alt="name" height="40" />
-        </div>
-        <form id="loginform" onSubmit={handleSubmit}>
-          <br />
-          <h3>Sign in</h3>
-          {errors ? <div className="displayederrors">{errors}</div> : null}
-          <input
-            type="text"
-            id="email"
-            name="email"
-            className="forminput"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder=" Email"
-          />
-          <br />
-          <br />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="forminput"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder=" Password"
-          />
-          <br />
-          <br />
-          <input type="submit" className="submit" value="Sign in"></input>
-          <h3>
-            New to Virtual Care?
-            <a id="signuplink" href="/signup">
-              {" "}
-              Create an account
-            </a>
-          </h3>
-        </form>
+      <CssBaseline />
+      <div className={classes.login}>
+        <Stack spacing={2}>
+          <Container maxWidth="max-content">
+            <img
+              src={require("../Assets/logoonly.png")}
+              alt="Logo"
+              height="40"
+            />
+            <img
+              src={require("../Assets/appname.png")}
+              alt="name"
+              height="40"
+            />
+          </Container>
+
+          <Container className={classes.loginForm}>
+            <br />
+            <br />
+            <Typography variant="h6">Sign in</Typography>
+            {errors ? <div className="displayederrors">{errors}</div> : null}
+            <form onSubmit={handleSubmit}>
+              <FormControl onSubmit={handleSubmit}>
+                <InputLabel>Email Address</InputLabel>
+                <Input
+                  aria-describedby="my-helper-text"
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <br />
+              <FormControl onSubmit={handleSubmit}>
+                <InputLabel>Password</InputLabel>
+                <Input
+                  aria-describedby="my-helper-text"
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <br />
+              <br />
+              <Button
+                type="submit"
+                className={classes.button}
+                size="large"
+                variant="contained"
+              >
+                Sign in
+              </Button>
+              <br />
+              <br />
+              <Typography variant="subtitle1">
+                New to Virtual Care?
+                <a id="signuplink" href="/signup">
+                  {" "}
+                  Create an account
+                </a>
+              </Typography>
+            </form>
+          </Container>
+        </Stack>
       </div>
     </>
   );
