@@ -18,6 +18,28 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ffffff',
   },
 
+  //card data
+  cardGrid: {
+    padding: "60px",
+    alignContent: "center",
+  },
+  card: {
+    backgroundColor: "#ededed",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    borderRadius: "25px",
+  },
+  cardContent: {
+    flexGrow: 1,
+    textAlign: "center"
+  },
+  stars: {
+    color: "#FFBF00",
+  },
+
+
+
   //LANDING PAGE
   logo: {
     marginTop: "10px",
@@ -47,25 +69,6 @@ const useStyles = makeStyles((theme) => ({
     bottom: "100px",
   },
 
-  //card data
-  cardGrid: {
-    padding: "60px",
-    alignContent: "center",
-    // marginLeft: "200px"
-  },
-  card: {
-    backgroundColor: "#ededed",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    borderRadius: "25px",
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  stars: {
-    color: "#FFBF00",
-  },
 
   footer: {
     marginTop: "60px",
@@ -99,6 +102,28 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  //HOMEPAGE
+  topSection: {
+    padding: "40px",
+    backgroundColor: "#E5E8F1",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  searchForm: {
+    float: "left",
+  },
+  searchIcon: {
+    float: "left",
+  },
+
+  docName: {
+    fontWeight: "bold"
+  },
+  viewProfile: {
+    fontWeight: "bold"
   },
 }));
 

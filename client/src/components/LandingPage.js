@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Typography,
   AppBar,
@@ -14,8 +13,6 @@ import ReviewSamples from "./ReviewSamples";
 
 const LandingPage = () => {
   const classes = useStyles();
-
-
 
   return (
     <>
@@ -77,16 +74,17 @@ const LandingPage = () => {
             What our customers say
           </Typography>
           <Container className={classes.cardGrid} maxWidth="max-content">
-            <Grid container spacing={4} >
-            <ReviewSamples />
+            <Grid container spacing={4}>
+              <ReviewSamples />
             </Grid>
           </Container>
         </div>
-          <footer className={classes.footer}>
-            <Typography variant="h6" align="center" gutterBottom>
-            © 2022 Virtual Care. All Rights Reserved | 111 Ocean Drive, San Fransisco, CA 94111
-            </Typography>
-          </footer>
+        <footer className={classes.footer}>
+          <Typography variant="h6" align="center" gutterBottom>
+            © 2022 Virtual Care. All Rights Reserved | 111 Ocean Drive, San
+            Fransisco, CA 94111
+          </Typography>
+        </footer>
       </main>
     </>
   );

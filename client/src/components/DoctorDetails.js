@@ -2,8 +2,22 @@ import React, { useState } from "react";
 import BookAppointment from "./BookAppointment";
 import DoctorProfile from "./DoctorProfile";
 // import { Link } from "react-router-dom";
+import {
+  Typography,
+  AppBar,
+  Button,
+  CssBaseline,
+  Grid,
+  Toolbar,
+  Container,
+  Card,
+  CardContent,
+} from "@material-ui/core";
+import useStyles from "./styles";
 
 const DoctorDetails = ({ result }) => {
+  const classes = useStyles();
+
   const {
     id,
     image_url,
@@ -17,7 +31,7 @@ const DoctorDetails = ({ result }) => {
   } = result;
 
   const [docProfile, showdocProfile] = useState(false);
-  const [bookAppt, showBookAppt] = useState(false)
+  const [bookAppt, showBookAppt] = useState(false);
 
   const ratingDisplay = () => {
     let ratingArr = [];
@@ -43,31 +57,72 @@ const DoctorDetails = ({ result }) => {
   };
 
   const handleAppts = () => {
-    showBookAppt(!bookAppt)
+    showBookAppt(!bookAppt);
   };
 
   return (
     <>
       <div>
-        <img src={image_url} alt="profile_pic" height="100" />
-        <h4>
-          Dr. {first_name} {last_name}
-        </h4>
-        <h4>{specialty}</h4>
-        <h5>
-          {city}, {state}
-        </h5>
-        <button onClick={handleProfile}>View Profile</button>
+        <CssBaseline />
+        <Container className={classes.cardGrid} maxWidth="max-content">
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={6} md={4} lg={2}>
+              <Card className={classes.card}>
+                <CardContent className={classes.cardContent}>
+                  <img src={image_url} alt="profile_pic" height="100" />
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    className={classes.docName}
+                  >
+                    Dr. {first_name} {last_name}
+                  </Typography>
+                  <Typography gutterBottom variant="h6">
+                    {specialty}
+                  </Typography>
+                  <Typography gutterBottom variant="p">
+                    {city}, {state}
+                  </Typography>
+                  <br />
+                  <br />
+                  <Button
+                    onClick={handleProfile}
+                    variant="outlined"
+                    className={classes.viewProfile}
+                  >
+                    View Profile
+                  </Button>
+                  <br />
+                  <br />
+                  {docProfile ? <DoctorProfile result={result} /> : null}
+                  <Container>
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      className={classes.stars}
+                    >
+                      {ratingDisplay()}
+                    </Typography>
+                    <Typography gutterBottom variant="p">
+                      ({total_reviews} reviews)
+                    </Typography>
+                  </Container>
+                  <br />
+                  <Button
+                    className={classes.button}
+                    onClick={handleAppts}
+                    size="large"
+                    variant="contained"
+                  >
+                    Book
+                  </Button>
+                  {bookAppt ? <BookAppointment docId={id} /> : null}
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Container>
       </div>
-      {docProfile ? <DoctorProfile result={result} /> : null}
-      <div id="rating">
-        <h4 id="ratingstars">{ratingDisplay()}</h4>
-        <h4>({total_reviews} reviews)</h4>
-      </div>
-      <button id="visitdoc" onClick={handleAppts}>
-        Book
-      </button>
-      {bookAppt ? <BookAppointment docId={id}/> : null}
     </>
   );
 };
