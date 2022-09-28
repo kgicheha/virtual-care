@@ -7,7 +7,8 @@ import {
   CssBaseline,
   Container,
   FormControl,
-  Input
+  Input,
+  Grid,
 } from "@material-ui/core";
 import useStyles from "./styles";
 
@@ -26,14 +27,17 @@ const HomePage = ({ results, setSearchWord }) => {
           <Typography variant="h3">Book Appointment Today</Typography>
           <br />
           <Container className={classes.searchSection}>
-            <FormControl style={{ minWidth: 500 }} className={classes.searchForm}>
+            <FormControl
+              style={{ minWidth: 500 }}
+              className={classes.searchForm}
+            >
               <Input
                 aria-describedby="my-helper-text"
                 type="text"
                 onChange={handleChange}
                 placeholder="Search by Doctor's Name or Specialty"
               />
-              <SearchIcon fontSize="large" className={classes.searchIcon}/>
+              <SearchIcon fontSize="large" className={classes.searchIcon} />
             </FormControl>
           </Container>
         </Stack>
@@ -45,7 +49,11 @@ const HomePage = ({ results, setSearchWord }) => {
       <br />
       <br />
       <>
-      <DoctorContainer results={results} />
+        <Container className={classes.cardGrid} maxWidth="max-content">
+          <Grid container spacing={4}>
+            <DoctorContainer results={results} />
+          </Grid>
+        </Container>
       </>
     </>
   );

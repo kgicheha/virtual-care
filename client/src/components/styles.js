@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#ededed",
     height: "100%",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     borderRadius: "25px",
   },
   cardContent: {

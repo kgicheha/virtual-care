@@ -60,54 +60,46 @@ const DoctorDetails = ({ result }) => {
 
   return (
     <>
-      <div>
-        <CssBaseline />
-        <Container className={classes.cardGrid} maxWidth="max-content">
-          <Grid container spacing={4}>
-            <Grid item xs={12} sm={6} md={4} lg={2}>
-              <Card className={classes.card}>
-                <CardContent className={classes.cardContent}>
-                  <img src={image_url} alt="profile_pic" height="100" />
-                  <Typography variant="h6" className={classes.docName}>
-                    Dr. {first_name} {last_name}
-                  </Typography>
-                  <Typography gutterBottom variant="h6">
-                    {specialty}
-                  </Typography>
-                  <Button
-                    onClick={handleProfile}
-                    variant="outlined"
-                    className={classes.viewProfile}
-                  >
-                    View Profile
-                  </Button>
-                  <br />
-                  <br />
-                  {docProfile ? <DoctorProfile result={result} /> : null}
-                  <Container>
-                    <Typography variant="h6" className={classes.stars}>
-                      {ratingDisplay()}
-                    </Typography>
-                    <Typography variant="body2">
-                      ({total_reviews} reviews)
-                    </Typography>
-                  </Container>
-                  <br />
-                  <Button
-                    className={classes.button}
-                    onClick={handleAppts}
-                    size="large"
-                    variant="contained"
-                  >
-                    Book
-                  </Button>
-                  {bookAppt ? <BookAppointment docId={id} /> : null}
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Container>
-      </div>
+      <CssBaseline />
+      <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Card className={classes.card}>
+          <CardContent className={classes.cardContent}>
+            <img src={image_url} alt="profile_pic" height="100" />
+            <Typography variant="h6" className={classes.docName}>
+              Dr. {first_name} {last_name}
+            </Typography>
+            <Typography gutterBottom variant="h6">
+              {specialty}
+            </Typography>
+            <Button
+              onClick={handleProfile}
+              variant="outlined"
+              className={classes.viewProfile}
+            >
+              View Profile
+            </Button>
+            <br />
+            <br />
+            {docProfile ? <DoctorProfile result={result} /> : null}
+            <Container>
+              <Typography variant="h6" className={classes.stars}>
+                {ratingDisplay()}
+              </Typography>
+              <Typography variant="body2">({total_reviews} reviews)</Typography>
+            </Container>
+            <br />
+            <Button
+              className={classes.button}
+              onClick={handleAppts}
+              size="large"
+              variant="contained"
+            >
+              Book
+            </Button>
+            {bookAppt ? <BookAppointment docId={id} /> : null}
+          </CardContent>
+        </Card>
+      </Grid>
     </>
   );
 };
