@@ -38,10 +38,10 @@ const useStyles = makeStyles((theme) => ({
     color: "#FFBF00",
   },
 
-  appBarMenu: {
-    position: "absolute",
-  },
   userIcon: {
+    position: "absolute",
+    top: "40px",
+    right: "16px",
     color: "#696969",
     "&:hover": {
       color: "#585858",

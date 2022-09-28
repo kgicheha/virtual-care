@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
@@ -8,7 +8,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalanceOutlined";
-import { Typography, AppBar, CssBaseline, Toolbar } from "@material-ui/core";
+import { AppBar, CssBaseline, Toolbar } from "@material-ui/core";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LogoutIcon from "@mui/icons-material/Logout";
 import useStyles from "./styles";
@@ -16,8 +16,10 @@ import useStyles from "./styles";
 const NavBar = ({ currentUser, updateUser }) => {
   const classes = useStyles();
 
-  // const { first_name, last_name } = currentUser;
-  // const initial = first_name.slice(0, 1).toUpperCase();
+  // if (currentUser !== null){
+  //   const { first_name, last_name } = currentUser;
+  //   const initial = first_name.slice(0, 1).toUpperCase();
+  // }
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -38,25 +40,6 @@ const NavBar = ({ currentUser, updateUser }) => {
     history.push("/"); // redirect user to home page after logging out
   };
 
-  // return (
-  //   <div>
-  //     {currentUser === null ? (
-  //       <></>
-  //     ) : (
-  //       <>
-  //         <div>
-  //           <img src={require("../Assets/logo.png")} alt="Logo" height="200" />
-  //         </div>
-  //         <div>
-  //           <button id="signoutbutton" onClick={handleLogOut}>
-  //             Sign Out
-  //           </button>
-  //         </div>
-  //       </>
-  //     )}
-  //   </div>
-  // );
-
   return (
     <div>
       {currentUser === null ? (
@@ -72,89 +55,81 @@ const NavBar = ({ currentUser, updateUser }) => {
               height="100"
               className={classes.logo}
             />
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              <Tooltip
-                title="Account Information"
-                className={classes.appBarMenu}
+            <div className={classes.userIcon}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
               >
-                <IconButton
-                  // className={classes.userIcon}
-                  onClick={handleClick}
-                  size="large"
-                  sx={{ ml: 2 }}
-                  aria-controls={open ? "account-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                >
-                  <Typography variant="h6" className={classes.userName}>
-                    Hi, Kevin
-                  </Typography>
-                  <Avatar
-                    sx={{ width: 50, height: 50 }}
-                    className={classes.userIcon}
+                <Tooltip title="Account Information">
+                  <IconButton
+                    onClick={handleClick}
+                    size="large"
+                    sx={{ ml: 2 }}
+                    aria-controls={open ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
                   >
-                    {/* {initial} */}
-                  </Avatar>
-                </IconButton>
-              </Tooltip>
-            </Box>
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
+                    <Avatar sx={{ width: 50, height: 50 }}>
+                      {/* {initial} */}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
                   },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              <MenuItem>
-                <AccountBalanceIcon /> My Bills
-              </MenuItem>
-              <MenuItem>
-                <CalendarMonthIcon />
-                Appointments
-              </MenuItem>
-              <MenuItem>
-                <AccountCircleIcon />
-                Update Profile
-              </MenuItem>
-              <MenuItem onClick={handleLogOut}>
-                <LogoutIcon />
-                Sign Out
-              </MenuItem>
-            </Menu>
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <MenuItem>
+                  <AccountBalanceIcon /> My Bills
+                </MenuItem>
+                <MenuItem>
+                  <CalendarMonthIcon />
+                  Appointments
+                </MenuItem>
+                <MenuItem>
+                  <AccountCircleIcon />
+                  Update Profile
+                </MenuItem>
+                <MenuItem onClick={handleLogOut}>
+                  <LogoutIcon />
+                  Sign Out
+                </MenuItem>
+              </Menu>
+            </div>
           </Toolbar>
         </>
       )}
