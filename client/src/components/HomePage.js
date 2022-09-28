@@ -7,7 +7,7 @@ import {
   CssBaseline,
   Container,
   FormControl,
-  Input,
+  Input
 } from "@material-ui/core";
 import useStyles from "./styles";
 

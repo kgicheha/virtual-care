@@ -5,7 +5,9 @@ const DoctorContainer = ({ results }) => {
   const renderDoctors = () =>
     results.map((result) => <DoctorDetails key={result.id} result={result} />);
 
-  return <div>{renderDoctors()}</div>;
+  return (
+    renderDoctors()
+  )
 };
 
 export default DoctorContainer;

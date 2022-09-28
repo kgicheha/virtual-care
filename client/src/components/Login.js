@@ -84,7 +84,9 @@ const Login = ({ updateUser }) => {
             <br />
             <Typography variant="h6">Sign in</Typography>
             {errors ? <div className={classes.displayedErrors}>{errors}</div> : null}
-            <form onSubmit={handleSubmit}>
+            <form
+            onSubmit={handleSubmit}
+            >
               <FormControl >
                 <InputLabel>Email Address</InputLabel>
                 <Input
@@ -97,7 +99,7 @@ const Login = ({ updateUser }) => {
                 />
               </FormControl>
               <br />
-              <FormControl onSubmit={handleSubmit}>
+              <FormControl >
                 <InputLabel>Password</InputLabel>
                 <Input
                   aria-describedby="my-helper-text"

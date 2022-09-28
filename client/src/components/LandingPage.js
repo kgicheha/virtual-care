@@ -41,11 +41,10 @@ const LandingPage = () => {
             <Typography variant="h2">
               Visit with a <br></br> doctor 24/7
             </Typography>
-            <Typography variant="p">
+            <Typography variant="body2" gutterBottom>
               Get expert advice, presciptions, and access to your medical
               records
             </Typography>
-            <br />
             <br />
             <Button
               className={classes.button}
@@ -65,7 +64,7 @@ const LandingPage = () => {
             />
           </Container>
         </div>
-
+        <br />
         <div id="reviewsection">
           <Container maxWidth="max-content">
             <Typography variant="h3">Why Us?</Typography>

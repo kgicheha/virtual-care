@@ -4,11 +4,9 @@ import DoctorProfile from "./DoctorProfile";
 // import { Link } from "react-router-dom";
 import {
   Typography,
-  AppBar,
   Button,
   CssBaseline,
   Grid,
-  Toolbar,
   Container,
   Card,
   CardContent,
@@ -25,8 +23,8 @@ const DoctorDetails = ({ result }) => {
     last_name,
     specialty,
     rating,
-    state,
-    city,
+    // state,
+    // city,
     total_reviews,
   } = result;
 
@@ -70,21 +68,12 @@ const DoctorDetails = ({ result }) => {
               <Card className={classes.card}>
                 <CardContent className={classes.cardContent}>
                   <img src={image_url} alt="profile_pic" height="100" />
-                  <Typography
-                    gutterBottom
-                    variant="h6"
-                    className={classes.docName}
-                  >
+                  <Typography variant="h6" className={classes.docName}>
                     Dr. {first_name} {last_name}
                   </Typography>
                   <Typography gutterBottom variant="h6">
                     {specialty}
                   </Typography>
-                  <Typography gutterBottom variant="p">
-                    {city}, {state}
-                  </Typography>
-                  <br />
-                  <br />
                   <Button
                     onClick={handleProfile}
                     variant="outlined"
@@ -96,14 +85,10 @@ const DoctorDetails = ({ result }) => {
                   <br />
                   {docProfile ? <DoctorProfile result={result} /> : null}
                   <Container>
-                    <Typography
-                      gutterBottom
-                      variant="h6"
-                      className={classes.stars}
-                    >
+                    <Typography variant="h6" className={classes.stars}>
                       {ratingDisplay()}
                     </Typography>
-                    <Typography gutterBottom variant="p">
+                    <Typography variant="body2">
                       ({total_reviews} reviews)
                     </Typography>
                   </Container>

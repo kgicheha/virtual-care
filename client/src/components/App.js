@@ -14,22 +14,26 @@ function App() {
   const [results, setResults] = useState([]);
 
   //get patients session
-  useEffect(() => {
-    fetch(`/me`)
-      .then((res) => res.json())
-      .then((patient) => {
-        setCurrentUser(patient);
-      });
-  }, []);
+  // useEffect(() => {
+  //   if (currentUser !== null) {
+  //   fetch(`/me`)
+  //     .then((res) => res.json())
+  //     .then((patient) => {
+  //       setCurrentUser(patient);
+  //     });
+  //   }
+  // }, []);
 
   //fetch doctors records
   useEffect(() => {
+    if (currentUser !== null) {
     fetch(`/doctors`)
       .then((res) => res.json())
       .then((data) => {
         setResults(data);
       });
-  }, []);
+    }
+  }, [currentUser]);
 
   //search functionality
   // eslint-disable-next-line

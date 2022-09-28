@@ -15,13 +15,13 @@ const ReviewSamples = () => {
         {
           name: "John Doe",
           rating: "★★★★★",
-          when: "2 Weeks Ago",
+          when: "Today",
           comment: "Easy to use and doctor was very professional"
         },
         {
           name: "Jane Doe",
           rating: "★★★★★",
-          when: "1 Month Ago",
+          when: "Yesterday",
           comment: "Easy to use and doctor was very professional"
         },
         {
@@ -33,7 +33,19 @@ const ReviewSamples = () => {
         {
           name: "Jane Doe",
           rating: "★★★★★",
-          when: "2 Month Ago",
+          when: "2 Months Ago",
+          comment: "Very Satisfied!"
+        },
+        {
+          name: "Jane Doe",
+          rating: "★★★★★",
+          when: "3 Weeks Ago",
+          comment: "Very Satisfied!"
+        },
+        {
+          name: "Jane Doe",
+          rating: "★★★★★",
+          when: "1 Week Ago",
           comment: "Very Satisfied!"
         }
       ]
@@ -44,9 +56,9 @@ const ReviewSamples = () => {
         <Card className={classes.card} >
           <CardContent className={classes.cardContent}>
             <Typography gutterBottom variant="h6">{review.name}</Typography>
-            <Typography gutterBottom variant="h6" className={classes.stars}>{review.rating}</Typography>
-            <Typography gutterBottom variant="p">{review.when}</Typography>
-            <Typography gutterBottom variant="h6">{review.comment}</Typography>
+            <Typography variant="body1" className={classes.stars}>{review.rating}</Typography>
+            <Typography gutterBottom variant="body2">{review.when}</Typography>
+            <Typography gutterBottom variant="body1">{review.comment}</Typography>
           </CardContent>
         </Card>
       </Grid>

@@ -38,6 +38,22 @@ const useStyles = makeStyles((theme) => ({
     color: "#FFBF00",
   },
 
+  appBarMenu: {
+    position: "absolute",
+  },
+  userIcon: {
+    color: "#696969",
+    "&:hover": {
+      color: "#585858",
+    },
+  },
+  userName: {
+    fontWeight: "bold",
+    color: "#696969",
+    "&:hover": {
+      color: "#585858",
+    },
+  },
 
 
   //LANDING PAGE
