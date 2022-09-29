@@ -8,13 +8,12 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalanceOutlined";
-import { AppBar, CssBaseline, Toolbar } from "@material-ui/core";
+import { AppBar, CssBaseline, Toolbar } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LogoutIcon from "@mui/icons-material/Logout";
-import useStyles from "./styles";
+import { styled } from "@mui/material";
 
 const NavBar = ({ currentUser, updateUser }) => {
-  const classes = useStyles();
 
   // if (currentUser !== null){
   //   const { first_name, last_name } = currentUser;
@@ -40,6 +39,13 @@ const NavBar = ({ currentUser, updateUser }) => {
     history.push("/"); // redirect user to home page after logging out
   };
 
+  //CUSTOM CSS
+  const MyCustomImage = styled("img")({
+    marginTop: "10px",
+    marginBottom: "10px",
+  });
+  //CUSTOM CSS ^^
+
   return (
     <div>
       {currentUser === null ? (
@@ -49,13 +55,12 @@ const NavBar = ({ currentUser, updateUser }) => {
           <CssBaseline />
           <AppBar position="relative" />
           <Toolbar>
-            <img
+            <MyCustomImage
               src={require("../Assets/logo.png")}
               alt="Logo"
               height="100"
-              className={classes.logo}
-            />
-            <div className={classes.userIcon}>
+            ></MyCustomImage>
+            <div id="customUserIcon">
               <Box
                 sx={{
                   display: "flex",
@@ -73,7 +78,7 @@ const NavBar = ({ currentUser, updateUser }) => {
                     aria-expanded={open ? "true" : undefined}
                   >
                     <Avatar sx={{ width: 50, height: 50 }}>
-                      {/* {initial} */}
+                    {/* {initial} */}
                     </Avatar>
                   </IconButton>
                 </Tooltip>
@@ -129,7 +134,7 @@ const NavBar = ({ currentUser, updateUser }) => {
                   Sign Out
                 </MenuItem>
               </Menu>
-            </div>
+              </div>
           </Toolbar>
         </>
       )}

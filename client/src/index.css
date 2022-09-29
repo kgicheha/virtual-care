@@ -12,10 +12,27 @@ code {
     monospace;
 }
 
+/* NAV BAR */
+#customUserIcon {
+  position: absolute;
+  top: 40px;
+  right: 16px;
+  color: #696969;
+}
+:hover {
+  color: #585858;
+}
 
 /* Landing page CSS */
+#logoImage {
+  margin-top: 10px;
+  margin-bottom: 10px
+}
 
-#midsection h2 {
+#midSection {
+  background-color: #e5e8f1
+}
+#midSection h2 {
   color: #0f3c6b;
 }
 #reviewsection h3 {
@@ -30,6 +47,13 @@ code {
 
 
 /* HomePage */
+#topSection {
+  padding: 40px;
+  background-color: #E5E8F1;
+  display: flex;
+  align-items: center;
+  justify-content: center,
+}
 
 #ratingstars {
   color: #32CD32;

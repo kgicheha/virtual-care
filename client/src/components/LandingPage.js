@@ -7,37 +7,72 @@ import {
   Grid,
   Toolbar,
   Container,
-} from "@material-ui/core";
-import useStyles from "./styles";
+} from "@mui/material";
+
+import { styled } from "@mui/material";
+import { red } from "@mui/material/colors";
 import ReviewSamples from "./ReviewSamples";
 
 const LandingPage = () => {
-  const classes = useStyles();
 
+  //CUSTOM CSS
+  const SignInButton = styled(Button)({
+    position: "absolute",
+    top: "55px",
+    right: "16px",
+    backgroundColor: "#f35757",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: red[700],
+    },
+  });
+  const CustomButton = styled(Button)({
+    fontWeight: "bold",
+    backgroundColor: "#f35757",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: red[700],
+    },
+  });
+
+  const FirstContainer = styled(Container)({
+    padding: "80px",
+  });
+  const DoctorGif = styled(Container)({
+    position: "relative",
+    left: "300px",
+    bottom: "100px",
+  });
+  const CustomCardGrid = styled(Container)({
+    padding: "60px",
+    alignContent: "center",
+  });
+  const Footer = styled("footer")({
+    marginTop: "60px",
+    backgroundColor: "#000000",
+    color: "#ffffff",
+    padding: "80px",
+  });
+    //  CUSTOM CSS ^^
   return (
     <>
       <CssBaseline />
       <AppBar position="relative" />
       <Toolbar>
         <img
+          id ="logoImage"
           src={require("../Assets/logo.png")}
           alt="Logo"
           height="100"
-          className={classes.logo}
-        />
-        <Button
-          className={classes.signinbutton}
-          size="large"
-          variant="contained"
-          href="/login"
-        >
+        ></img>
+        <SignInButton size="large" variant="contained" href="/login">
           Sign in
-        </Button>
+        </SignInButton>
       </Toolbar>
 
       <main>
-        <div id="midsection" className={classes.midSection}>
-          <Container maxWidth="max-content" className={classes.firstContainer}>
+        <div id="midSection">
+          <FirstContainer maxWidth="max-content">
             <Typography variant="h2">
               Visit with a <br></br> doctor 24/7
             </Typography>
@@ -46,23 +81,17 @@ const LandingPage = () => {
               records
             </Typography>
             <br />
-            <Button
-              className={classes.button}
-              size="large"
-              variant="contained"
-              href="/login"
-            >
+            <CustomButton size="large" variant="contained" href="/login">
               Continue
-            </Button>
-          </Container>
-
-          <Container className={classes.doctorGif} maxWidth="max-content">
+            </CustomButton>
+          </FirstContainer>
+          <DoctorGif maxWidth="max-content">
             <img
               src={require("../Assets/doctor.gif")}
               alt="Logo"
               height="500"
             />
-          </Container>
+          </DoctorGif>
         </div>
         <br />
         <div id="reviewsection">
@@ -72,18 +101,18 @@ const LandingPage = () => {
           <Typography align="center" variant="h4">
             What our customers say
           </Typography>
-          <Container className={classes.cardGrid} maxWidth="max-content">
+          <CustomCardGrid maxWidth="max-content">
             <Grid container spacing={4}>
               <ReviewSamples />
             </Grid>
-          </Container>
+          </CustomCardGrid>
         </div>
-        <footer className={classes.footer}>
+        <Footer>
           <Typography variant="h6" align="center" gutterBottom>
             © 2022 Virtual Care. All Rights Reserved | 111 Ocean Drive, San
             Fransisco, CA 94111
           </Typography>
-        </footer>
+        </Footer>
       </main>
     </>
   );

@@ -1,7 +1,8 @@
 import React from "react";
 import DoctorContainer from "./DoctorContainer";
-import SearchIcon from "@mui/icons-material/Search";
+import SearchIcon from '@mui/icons-material/Search';
 import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material";
 import {
   Typography,
   CssBaseline,
@@ -9,27 +10,40 @@ import {
   FormControl,
   Input,
   Grid,
-} from "@material-ui/core";
-import useStyles from "./styles";
+} from "@mui/material";
 
 const HomePage = ({ results, setSearchWord }) => {
-  const classes = useStyles();
 
   const handleChange = (e) => {
+    e.preventDefault()
     setSearchWord(e.target.value);
+    console.log(e.target.value)
   };
+
+
+  // CUSTOM CSS
+  const CustomSearchIcon = styled(SearchIcon)({
+    float: "left",
+  });
+  // const CustomSearchForm = styled(FormControl)({
+  //   float: "left",
+  // });
+  const CardGrid = styled(Container)({
+    padding: "60px",
+    alignContent: "center",
+  });
+  // CUSTOM CSS ^^
 
   return (
     <>
       <CssBaseline />
-      <div className={classes.topSection}>
+      <div id= 'topSection'>
         <Stack spacing={2}>
           <Typography variant="h3">Book Appointment Today</Typography>
           <br />
-          <Container className={classes.searchSection}>
-            <FormControl
+          <Container>
+          <FormControl
               style={{ minWidth: 500 }}
-              className={classes.searchForm}
             >
               <Input
                 aria-describedby="my-helper-text"
@@ -37,8 +51,8 @@ const HomePage = ({ results, setSearchWord }) => {
                 onChange={handleChange}
                 placeholder="Search by Doctor's Name or Specialty"
               />
-              <SearchIcon fontSize="large" className={classes.searchIcon} />
-            </FormControl>
+              <CustomSearchIcon fontSize="large" />
+          </FormControl>
           </Container>
         </Stack>
       </div>
@@ -49,11 +63,11 @@ const HomePage = ({ results, setSearchWord }) => {
       <br />
       <br />
       <>
-        <Container className={classes.cardGrid} maxWidth="max-content">
+        <CardGrid maxWidth="max-content">
           <Grid container spacing={4}>
             <DoctorContainer results={results} />
           </Grid>
-        </Container>
+        </CardGrid>
       </>
     </>
   );

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Stack from "@mui/material/Stack";
+// import Stack from "@mui/material/Stack";
+import { styled, Stack} from "@mui/material";
+import { red } from "@mui/material/colors";
 import {
   Typography,
   Button,
@@ -9,17 +11,17 @@ import {
   FormControl,
   InputLabel,
   Input,
-} from "@material-ui/core";
-import useStyles from "./styles";
+} from "@mui/material";
+
 
 const Login = ({ updateUser }) => {
-  const classes = useStyles();
 
   //storing data from the form
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  console.log(formData)
 
   //to display the errors
   const [errors, setErrors] = useState([]);
@@ -61,10 +63,38 @@ const Login = ({ updateUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // CUSTOM CSS
+  const LoginDiv = styled("div")({
+    marginTop: "20px",
+    backgroundColor: "hsl(0, 0%, 93%)",
+    opacity: "0.8",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  });
+  const CustomForm = styled(Container)({
+    backgroundColor: "#ffffff",
+  });
+  const DisplayedErrors = styled("div")({
+    color: "#f35757",
+  });
+  const CustomButton = styled(Button)({
+    fontWeight: "bold",
+    backgroundColor: "#f35757",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: red[700],
+    },
+  });
+  // CUSTOM CSS ^^
+
   return (
     <>
       <CssBaseline />
-      <div className={classes.login}>
+      <LoginDiv>
         <Stack spacing={2}>
           <Container maxWidth="max-content">
             <img
@@ -79,15 +109,13 @@ const Login = ({ updateUser }) => {
             />
           </Container>
 
-          <Container className={classes.form}>
+          <CustomForm>
             <br />
             <br />
             <Typography variant="h6">Sign in</Typography>
-            {errors ? <div className={classes.displayedErrors}>{errors}</div> : null}
-            <form
-            onSubmit={handleSubmit}
-            >
-              <FormControl >
+            {errors ? <DisplayedErrors>{errors}</DisplayedErrors> : null}
+            <form onSubmit={handleSubmit}>
+              <FormControl>
                 <InputLabel>Email Address</InputLabel>
                 <Input
                   aria-describedby="my-helper-text"
@@ -99,7 +127,7 @@ const Login = ({ updateUser }) => {
                 />
               </FormControl>
               <br />
-              <FormControl >
+              <FormControl>
                 <InputLabel>Password</InputLabel>
                 <Input
                   aria-describedby="my-helper-text"
@@ -112,14 +140,14 @@ const Login = ({ updateUser }) => {
               </FormControl>
               <br />
               <br />
-              <Button
+              <CustomButton
                 type="submit"
-                className={classes.button}
                 size="large"
                 variant="contained"
               >
                 Sign in
-              </Button>
+              </CustomButton>
+
               <br />
               <br />
               <Typography variant="subtitle1">
@@ -130,9 +158,9 @@ const Login = ({ updateUser }) => {
                 </a>
               </Typography>
             </form>
-          </Container>
+          </CustomForm>
         </Stack>
-      </div>
+      </LoginDiv>
     </>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material";
+import { red } from "@mui/material/colors";
 import {
   Typography,
   Button,
@@ -11,11 +13,11 @@ import {
   Input,
   MenuItem,
   Select,
-} from "@material-ui/core";
-import useStyles from "./styles";
+} from "@mui/material";
+// import useStyles from "./Styles";
 
 const SignUp = ({ updateUser }) => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   //storing data from the form
   const [formData, setFormData] = useState({
@@ -76,12 +78,39 @@ const SignUp = ({ updateUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // CUSTOM CSS
+  const SignUpDiv = styled("div")({
+    marginTop: "20px",
+    backgroundColor: "hsl(0, 0%, 93%)",
+    opacity: "0.8",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  });
+  const CustomForm = styled(Container)({
+    backgroundColor: "#ffffff",
+  });
+  const DisplayedErrors = styled("div")({
+    color: "#f35757",
+  });
+  const CustomButton = styled(Button)({
+    fontWeight: "bold",
+    backgroundColor: "#f35757",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: red[700],
+    },
+  });
+  // CUSTOM CSS ^^
 
   return (
     <>
       <CssBaseline />
-      <div className={classes.signup}>
-        <Stack spacing={2} >
+      <SignUpDiv>
+        <Stack spacing={2}>
           <Container maxWidth="max-content">
             <img
               src={require("../Assets/logoonly.png")}
@@ -94,15 +123,13 @@ const SignUp = ({ updateUser }) => {
               height="40"
             />
           </Container>
-          <Container className={classes.form}>
+          <CustomForm>
             <br />
             <br />
             <Typography variant="h6">Create profile</Typography>
             {errors
               ? errors.map((e) => (
-                  <div className={classes.displayedErrors}>
-                    {e[0] + ": " + e[1]}
-                  </div>
+                  <DisplayedErrors>{e[0] + ": " + e[1]}</DisplayedErrors>
                 ))
               : null}
             <form onSubmit={handleSubmit}>
@@ -143,7 +170,7 @@ const SignUp = ({ updateUser }) => {
                 />
               </FormControl>
               <br />
-              <FormControl style={{minWidth: 165}}>
+              <FormControl style={{ minWidth: 165 }}>
                 <InputLabel>Sex*</InputLabel>
                 <Select
                   id="sex"
@@ -156,7 +183,7 @@ const SignUp = ({ updateUser }) => {
                 </Select>
               </FormControl>
               <br />
-              <FormControl style={{minWidth: 165}}>
+              <FormControl style={{ minWidth: 165 }}>
                 <InputLabel>Current Insurance*</InputLabel>
                 <Select
                   id="health_insurance"
@@ -221,14 +248,9 @@ const SignUp = ({ updateUser }) => {
                 By continuing, I agree to the Privacy Policy and Terms of Use.
               </Typography>
               <br />
-              <Button
-                type="submit"
-                className={classes.button}
-                size="large"
-                variant="contained"
-              >
+              <CustomButton type="submit" size="large" variant="contained">
                 Create Account
-              </Button>
+              </CustomButton>
               <br />
               <br />
               <Typography variant="subtitle1">
@@ -239,9 +261,9 @@ const SignUp = ({ updateUser }) => {
                 </a>
               </Typography>
             </form>
-          </Container>
+          </CustomForm>
         </Stack>
-      </div>
+      </SignUpDiv>
     </>
   );
 };

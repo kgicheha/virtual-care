@@ -10,11 +10,11 @@ import {
   Container,
   Card,
   CardContent,
-} from "@material-ui/core";
-import useStyles from "./styles";
+} from "@mui/material";
+import { styled } from "@mui/material";
+import { red } from "@mui/material/colors";
 
 const DoctorDetails = ({ result }) => {
-  const classes = useStyles();
 
   const {
     id,
@@ -58,47 +58,77 @@ const DoctorDetails = ({ result }) => {
     showBookAppt(!bookAppt);
   };
 
+   // CUSTOM CSS
+   const CustomCard = styled(Card)({
+    backgroundColor: "#ededed",
+    height: "100%",
+    display: "flex",
+    flexDirection: "row",
+    borderRadius: "25px",
+  });
+  const CustomCardContent = styled(CardContent)({
+    flexGrow: 1,
+    textAlign: "center",
+  });
+  const Name = styled(Typography)({
+    fontWeight: "bold"
+  });
+  const Stars = styled(Typography)({
+    color: "#FFBF00",
+  });
+
+  const CustomButton = styled(Button)({
+    fontWeight: "bold",
+    backgroundColor: "#f35757",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: red[700],
+    },
+  });
+  const ViewProfileButton = styled(Button)({
+    fontWeight: "bold"
+  });
+  //  CUSTOM CSS ^^
+
   return (
     <>
       <CssBaseline />
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <Card className={classes.card}>
-          <CardContent className={classes.cardContent}>
+        <CustomCard >
+          <CustomCardContent >
             <img src={image_url} alt="profile_pic" height="100" />
-            <Typography variant="h6" className={classes.docName}>
+            <Name variant="h6">
               Dr. {first_name} {last_name}
-            </Typography>
+            </Name>
             <Typography gutterBottom variant="h6">
               {specialty}
             </Typography>
-            <Button
+            <ViewProfileButton
               onClick={handleProfile}
               variant="outlined"
-              className={classes.viewProfile}
             >
               View Profile
-            </Button>
+            </ViewProfileButton>
             <br />
             <br />
             {docProfile ? <DoctorProfile result={result} /> : null}
             <Container>
-              <Typography variant="h6" className={classes.stars}>
+              <Stars variant="h6">
                 {ratingDisplay()}
-              </Typography>
+              </Stars>
               <Typography variant="body2">({total_reviews} reviews)</Typography>
             </Container>
             <br />
-            <Button
-              className={classes.button}
+            <CustomButton
               onClick={handleAppts}
               size="large"
               variant="contained"
             >
               Book
-            </Button>
+            </CustomButton>
             {bookAppt ? <BookAppointment docId={id} /> : null}
-          </CardContent>
-        </Card>
+          </CustomCardContent>
+        </CustomCard>
       </Grid>
     </>
   );

@@ -16,8 +16,8 @@
         "@material-ui/core": "^4.12.4",
         "@mui/base": "^5.0.0-alpha.98",
         "@mui/icons-material": "^5.10.6",
-        "@mui/material": "^5.10.6",
+        "@mui/material": "^5.10.7",
         "@mui/styled-engine-sc": "^5.10.6",
-        "styled-components": "^5.3.5"
+        "styled-components": "^5.3.6"
     }
 }
