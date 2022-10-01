@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import BookAppointment from "./BookAppointment";
+import MyCalendar from "./MyCalendar";
 import HomePage from "./HomePage";
 import LandingPage from "./LandingPage";
 import Login from "./Login";
 import NavBar from "./NavBar";
 import SignUp from "./SignUp";
+import OldCalender from "./OldCalender";
 
 function App() {
   const [searchWord, setSearchWord] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   // const updateUser = (user) => setCurrentUser(user);
   const [results, setResults] = useState([]);
+  const [myAppointments, setMyAppointments] = useState([]);
+
 
   //get patients session
   // useEffect(() => {
@@ -49,6 +53,21 @@ function App() {
     }
   });
 
+  //get appointments
+  useEffect(() => {
+    if (currentUser !== null) {
+        fetch(`/appointments`)
+          .then((res) => res.json())
+          .then((data) => {
+            setMyAppointments(data);
+          });
+        }
+      }, [currentUser]);
+
+    const handleApptChange = (appointment) => {
+      // make patch request and update myapointments
+    }
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -62,6 +81,12 @@ function App() {
           </Route>
           <Route path="/bookappt">
             <BookAppointment updateUser={setCurrentUser} />
+          </Route>
+          {/* <Route path="/calender">
+            <MyCalendar myAppointments={myAppointments} updateUser={setCurrentUser} />
+          </Route> */}
+          <Route path="/oldcalender">
+            <OldCalender handleApptChange ={handleApptChange} myAppointments={myAppointments} currentUser={currentUser} />
           </Route>
           <Route path="/home">
             <HomePage

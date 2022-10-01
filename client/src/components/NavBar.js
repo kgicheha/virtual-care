@@ -121,9 +121,11 @@ const NavBar = ({ currentUser, updateUser }) => {
                 <MenuItem>
                   <AccountBalanceIcon /> My Bills
                 </MenuItem>
-                <MenuItem>
+                <MenuItem >
                   <CalendarMonthIcon />
-                  Appointments
+                  <a href="/oldcalender">
+                  Calendar
+                </a>
                 </MenuItem>
                 <MenuItem>
                   <AccountCircleIcon />

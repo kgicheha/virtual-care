@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material";
+import { styled, TextField } from "@mui/material";
 import { red } from "@mui/material/colors";
 import {
   Typography,
@@ -13,23 +13,14 @@ import {
   Input,
   MenuItem,
   Select,
+  Box,
 } from "@mui/material";
-// import useStyles from "./Styles";
+import { useForm } from "react-hook-form";
 
 const SignUp = ({ updateUser }) => {
-  // const classes = useStyles();
-
   //storing data from the form
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    dob: "",
-    sex: "",
-    health_insurance: "",
-    mobile: "",
-    email: "",
-    password: "",
-  });
+  //storing data from the form
+  const { register, handleSubmit } = useForm();
 
   //to display the errors
   const [errors, setErrors] = useState([]);
@@ -37,10 +28,9 @@ const SignUp = ({ updateUser }) => {
   //gives you access to the history instance that you may use to navigate.
   const history = useHistory();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormData(formData);
-    console.log(formData);
+  const onSubmit = (data) => {
+    // e.preventDefault();
+    console.log(data);
 
     // make post request on submit
     fetch(`/signup`, {
@@ -49,7 +39,7 @@ const SignUp = ({ updateUser }) => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(data),
     }).then((res) => {
       if (res.ok) {
         res.json().then((user) => {
@@ -60,42 +50,14 @@ const SignUp = ({ updateUser }) => {
         res.json().then((json) => setErrors(Object.entries(json.errors)));
       }
     });
-
-    //reset form
-    // setFormData({
-    //   first_name: "",
-    //   last_name: "",
-    //   dob: "",
-    //   sex: "",
-    //   health_insurance: "",
-    //   mobile: "",
-    //   email: "",
-    //   password: "",
-    // });
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
 
   // CUSTOM CSS
-  const SignUpDiv = styled("div")({
-    marginTop: "20px",
-    backgroundColor: "hsl(0, 0%, 93%)",
-    opacity: "0.8",
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const CustomForm = styled(Container)({
-    backgroundColor: "#ffffff",
-  });
-  const DisplayedErrors = styled("div")({
-    color: "#f35757",
-  });
+
   const CustomButton = styled(Button)({
     fontWeight: "bold",
     backgroundColor: "#f35757",
@@ -109,7 +71,7 @@ const SignUp = ({ updateUser }) => {
   return (
     <>
       <CssBaseline />
-      <SignUpDiv>
+      <div id="signUpDiv">
         <Stack spacing={2}>
           <Container maxWidth="max-content">
             <img
@@ -123,147 +85,140 @@ const SignUp = ({ updateUser }) => {
               height="40"
             />
           </Container>
-          <CustomForm>
-            <br />
-            <br />
-            <Typography variant="h6">Create profile</Typography>
-            {errors
-              ? errors.map((e) => (
-                  <DisplayedErrors>{e[0] + ": " + e[1]}</DisplayedErrors>
-                ))
-              : null}
-            <form onSubmit={handleSubmit}>
-              <FormControl>
-                <InputLabel>First Name*</InputLabel>
-                <Input
-                  aria-describedby="my-helper-text"
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <br />
-              <FormControl>
-                <InputLabel>Last Name*</InputLabel>
-                <Input
-                  aria-describedby="my-helper-text"
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <br />
-              <FormControl>
-                <InputLabel>Date of birth*</InputLabel>
-                <Input
-                  aria-describedby="my-helper-text"
-                  type="text"
-                  id="dob"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                  placeholder="MM/DD/YYYY"
-                />
-              </FormControl>
-              <br />
-              <FormControl style={{ minWidth: 165 }}>
-                <InputLabel>Sex*</InputLabel>
-                <Select
-                  id="sex"
-                  name="sex"
-                  value={formData.sex}
-                  onChange={handleChange}
+          <div className="customForm">
+            <Container>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <br />
+                <Typography variant="h6">Create profile</Typography>
+                {errors
+                  ? errors.map((e) => (
+                      <div className="displayedErrors">
+                        {e[0] + ": " + e[1]}
+                      </div>
+                    ))
+                  : null}
+                <br />
+                <Box mb={2}>
+                  <TextField
+                    type="text"
+                    label="First Name*"
+                    fullWidth
+                    variant="outlined"
+                    {...register("first_name")}
+                  />
+                </Box>
+                <Box mb={2}>
+                  <TextField
+                    type="text"
+                    label="Last Name*"
+                    fullWidth
+                    variant="outlined"
+                    {...register("last_name")}
+                  />
+                </Box>
+                <Box mb={2}>
+                  <TextField
+                    type="text"
+                    label="Date of Birth*"
+                    fullWidth
+                    variant="outlined"
+                    {...register("dob")}
+                    placeholder="MM/DD/YYYY"
+                  />
+                </Box>
+                <Box mb={2}>
+                <FormControl fullWidth>
+                  <InputLabel>Sex*</InputLabel>
+                  <Select
+                    name="sex"
+                    label="Sex"
+                    {...register("sex")}
+                    fullWidth
+                  >
+                    <MenuItem value="Male">Male</MenuItem>
+                    <MenuItem value="Female">Female</MenuItem>
+                  </Select>
+                </FormControl>
+                </Box>
+
+                <Box mb={2}>
+                <FormControl fullWidth>
+                  <InputLabel>Current Insurance*</InputLabel>
+                  <Select
+                    id="health_insurance"
+                    label="Health Insurance"
+                    // fullWidth
+                    {...register("health_insurance")}
+                  >
+                    <MenuItem value="United Health">United Health</MenuItem>
+                    <MenuItem value="Kaiser Foundation">
+                      Kaiser Foundation
+                    </MenuItem>
+                    <MenuItem value="Blue Cross Blue Shield">
+                      Blue Cross Blue Shield
+                    </MenuItem>
+                    <MenuItem value="Independence Health Group">
+                      Independence Health Group
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+                </Box>
+
+                <Box mb={2}>
+                  <TextField
+                    type="text"
+                    label="mobile"
+                    fullWidth
+                    variant="outlined"
+                    {...register("mobile")}
+                    placeholder="XXX-XXX-XXXX"
+                  />
+                </Box>
+                <Box mb={2}>
+                  <TextField
+                    type="text"
+                    label="email"
+                    fullWidth
+                    variant="outlined"
+                    {...register("email")}
+                    placeholder="example@gmail.com"
+                  />
+                </Box>
+                <Box mb={2}>
+                  <TextField
+                    type="password"
+                    label="password"
+                    fullWidth
+                    variant="outlined"
+                    {...register("password")}
+                    placeholder="*********"
+                  />
+                </Box>
+                <br />
+                <Typography variant="subtitle1">
+                  By continuing, I agree to the Privacy Policy and Terms of Use.
+                </Typography>
+                <br />
+                <CustomButton
+                  type="submit"
+                  size="large"
+                  variant="contained"
+                  fullWidth
                 >
-                  <MenuItem value="Male">Male</MenuItem>
-                  <MenuItem value="Female">Female</MenuItem>
-                </Select>
-              </FormControl>
-              <br />
-              <FormControl style={{ minWidth: 165 }}>
-                <InputLabel>Current Insurance*</InputLabel>
-                <Select
-                  id="health_insurance"
-                  name="health_insurance"
-                  value={formData.health_insurance}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="United Health">United Health</MenuItem>
-                  <MenuItem value="Kaiser Foundation">
-                    Kaiser Foundation
-                  </MenuItem>
-                  <MenuItem value="Blue Cross Blue Shield">
-                    Blue Cross Blue Shield
-                  </MenuItem>
-                  <MenuItem value="Independence Health Group">
-                    Independence Health Group
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <br />
-              <FormControl>
-                <InputLabel>Mobile*</InputLabel>
-                <Input
-                  aria-describedby="my-helper-text"
-                  type="text"
-                  id="mobile"
-                  name="mobile"
-                  value={formData.mobile}
-                  onChange={handleChange}
-                  placeholder="XXX-XXX-XXXX"
-                />
-              </FormControl>
-              <br />
-              <FormControl>
-                <InputLabel>Email Address*</InputLabel>
-                <Input
-                  aria-describedby="my-helper-text"
-                  type="text"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="example@gmail.com"
-                />
-              </FormControl>
-              <br />
-              <FormControl>
-                <InputLabel>Password*</InputLabel>
-                <Input
-                  aria-describedby="my-helper-text"
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="*********"
-                />
-              </FormControl>
-              <br />
-              <br />
-              <Typography variant="subtitle1">
-                By continuing, I agree to the Privacy Policy and Terms of Use.
-              </Typography>
-              <br />
-              <CustomButton type="submit" size="large" variant="contained">
-                Create Account
-              </CustomButton>
-              <br />
-              <br />
-              <Typography variant="subtitle1">
-                Already have an an account?
-                <a id="signuplink" href="/login">
-                  {" "}
-                  Sign in
-                </a>
-              </Typography>
-            </form>
-          </CustomForm>
+                  Create Account
+                </CustomButton>
+                <Typography variant="subtitle1">
+                  Already have an an account?
+                  <a id="signuplink" href="/login">
+                    {" "}
+                    Sign in
+                  </a>
+                </Typography>
+              </form>
+            </Container>
+          </div>
         </Stack>
-      </SignUpDiv>
+      </div>
     </>
   );
 };

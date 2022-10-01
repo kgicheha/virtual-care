@@ -1,27 +1,22 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-// import Stack from "@mui/material/Stack";
-import { styled, Stack} from "@mui/material";
+import { styled, Stack } from "@mui/material";
 import { red } from "@mui/material/colors";
+import { useForm } from "react-hook-form";
 import {
   Typography,
   Button,
   CssBaseline,
   Container,
-  FormControl,
   InputLabel,
   Input,
+  TextField,
+  Box,
 } from "@mui/material";
 
-
-const Login = ({ updateUser }) => {
-
+function Login({ updateUser }) {
   //storing data from the form
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  console.log(formData)
+  const { register, handleSubmit } = useForm();
 
   //to display the errors
   const [errors, setErrors] = useState([]);
@@ -29,9 +24,9 @@ const Login = ({ updateUser }) => {
   //gives you access to the history instance that you may use to navigate.
   const history = useHistory();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormData(formData);
+  const onSubmit = (data) => {
+    // e.preventDefault();
+    console.log(data);
 
     // make post request on submit
     fetch(`/login`, {
@@ -40,7 +35,7 @@ const Login = ({ updateUser }) => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(data),
     }).then((res) => {
       if (res.ok) {
         res.json().then((user) => {
@@ -52,35 +47,13 @@ const Login = ({ updateUser }) => {
       }
     });
 
-    //reset form
-    setFormData({
-      email: "",
-      password: "",
-    });
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
 
   // CUSTOM CSS
-  const LoginDiv = styled("div")({
-    marginTop: "20px",
-    backgroundColor: "hsl(0, 0%, 93%)",
-    opacity: "0.8",
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const CustomForm = styled(Container)({
-    backgroundColor: "#ffffff",
-  });
-  const DisplayedErrors = styled("div")({
-    color: "#f35757",
-  });
   const CustomButton = styled(Button)({
     fontWeight: "bold",
     backgroundColor: "#f35757",
@@ -94,7 +67,7 @@ const Login = ({ updateUser }) => {
   return (
     <>
       <CssBaseline />
-      <LoginDiv>
+      <div id="loginDiv">
         <Stack spacing={2}>
           <Container maxWidth="max-content">
             <img
@@ -109,46 +82,40 @@ const Login = ({ updateUser }) => {
             />
           </Container>
 
-          <CustomForm>
-            <br />
-            <br />
-            <Typography variant="h6">Sign in</Typography>
-            {errors ? <DisplayedErrors>{errors}</DisplayedErrors> : null}
-            <form onSubmit={handleSubmit}>
-              <FormControl>
-                <InputLabel>Email Address</InputLabel>
-                <Input
-                  aria-describedby="my-helper-text"
-                  type="text"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <br />
-              <FormControl>
-                <InputLabel>Password</InputLabel>
-                <Input
-                  aria-describedby="my-helper-text"
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <br />
-              <br />
-              <CustomButton
-                type="submit"
-                size="large"
-                variant="contained"
-              >
-                Sign in
-              </CustomButton>
-
-              <br />
+          <div className="customForm">
+            <Container>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <br />
+                <Typography variant="h6">Sign in</Typography>
+                {errors ? <div className="displayedErrors">{errors}</div> : null}
+                <br />
+                <Box mb={2}>
+                  <TextField
+                    type="text"
+                    label="email"
+                    fullWidth
+                    variant="outlined"
+                    {...register("email")}
+                  />
+                </Box>
+                <Box mb={2}>
+                  <TextField
+                    type="password"
+                    label="password"
+                    variant="outlined"
+                    fullWidth
+                    {...register("password")}
+                  />
+                </Box>
+                <CustomButton
+                  type="submit"
+                  size="large"
+                  variant="contained"
+                  fullWidth
+                >
+                  Sign in
+                </CustomButton>
+              </form>
               <br />
               <Typography variant="subtitle1">
                 New to Virtual Care?
@@ -157,12 +124,12 @@ const Login = ({ updateUser }) => {
                   Create an account
                 </a>
               </Typography>
-            </form>
-          </CustomForm>
+            </Container>
+          </div>
         </Stack>
-      </LoginDiv>
+      </div>
     </>
   );
-};
+}
 
 export default Login;

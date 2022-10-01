@@ -3,6 +3,7 @@ import DoctorContainer from "./DoctorContainer";
 import SearchIcon from '@mui/icons-material/Search';
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material";
+import { useForm } from "react-hook-form";
 import {
   Typography,
   CssBaseline,
@@ -10,9 +11,12 @@ import {
   FormControl,
   Input,
   Grid,
+  TextField
 } from "@mui/material";
 
 const HomePage = ({ results, setSearchWord }) => {
+
+  const { register, handleSubmit } = useForm();
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -42,17 +46,18 @@ const HomePage = ({ results, setSearchWord }) => {
           <Typography variant="h3">Book Appointment Today</Typography>
           <br />
           <Container>
-          <FormControl
+          <form
               style={{ minWidth: 500 }}
             >
-              <Input
-                aria-describedby="my-helper-text"
+              <TextField
                 type="text"
+                variant="standard"
+                fullWidth
                 onChange={handleChange}
                 placeholder="Search by Doctor's Name or Specialty"
               />
               <CustomSearchIcon fontSize="large" />
-          </FormControl>
+          </form>
           </Container>
         </Stack>
       </div>

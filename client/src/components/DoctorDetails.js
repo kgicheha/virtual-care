@@ -123,10 +123,11 @@ const DoctorDetails = ({ result }) => {
               onClick={handleAppts}
               size="large"
               variant="contained"
+              href="/oldcalendar"
             >
               Book
             </CustomButton>
-            {bookAppt ? <BookAppointment docId={id} /> : null}
+            {/* {bookAppt ? <BookAppointment docId={id} /> : null} */}
           </CustomCardContent>
         </CustomCard>
       </Grid>
