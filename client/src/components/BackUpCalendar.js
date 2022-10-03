@@ -10,7 +10,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 
-const MyCalendar = ({ myAppointments, updateUser }) => {
+const BackUpCalendar = ({ myAppointments, updateUser }) => {
   const localizer = momentLocalizer(moment);
 
   // const allViews = Object
@@ -38,4 +38,4 @@ const MyCalendar = ({ myAppointments, updateUser }) => {
   );
 };
 
-export default MyCalendar;
+export default BackUpCalendar;

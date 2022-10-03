@@ -12,9 +12,9 @@ p1 = Patient.create(first_name: "testing", last_name: "testing", dob: "O1/01/010
 puts "Done Seeding Patient"
 
 puts "Seeding Doctor"
-special = ["Therapist", "Family Physician", "Family Doctor", "Psychiatrist", "Neurologist", "Pediatrician",  "Cardiologist"]
+special = ["Therapist", "Family Doctor", "Dentist", "Eye Doctor", "Dermatologist", "Pediatrician",  "Cardiologist"]
 uni = ["University of Delaware", "Harvard Medical School", "New York University", "Columbia University", "Johns Hopkins University", "University of California--San Francisco"]
-500.times do
+150.times do
 
     Doctor.create(
         first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
@@ -33,8 +33,11 @@ puts "Done Seeding Doctor"
 
 loc = ['In-Person', 'Online']
 puts "Seeding Appointments"
-5.times do
-    Appointment.create(patient_id: p1.id, doctor_id: 1, appt_date_time: DateTime.now - (rand * 21), duration: rand(1...3), appt_reason: "Lorem ipsum dolor sit amet", appt_summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", location: loc.sample, prescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", rating: rand(3.5...5), total_cost: rand(30...1000)
-    )
-end
+
+a1= Appointment.create(patient_id: p1.id, doctor_id: 1, title: "Therapy", startDate: "2022-09-25T10:00", endDate: "2022-09-25T12:00")
+a2= Appointment.create(patient_id: p1.id, doctor_id: 1, title: "Therapy", startDate: "2022-09-26T10:00", endDate: "2022-09-26T12:00")
+a3= Appointment.create(patient_id: p1.id, doctor_id: 1, title: "Therapy", startDate: "2022-09-27T10:00", endDate: "2022-09-27T12:00")
+a4= Appointment.create(patient_id: p1.id, doctor_id: 1, title: "Therapy", startDate: "2022-09-28T10:00", endDate: "2022-09-28T12:00")
+a5= Appointment.create(patient_id: p1.id, doctor_id: 1, title: "Therapy", startDate: "2022-09-29T10:00", endDate: "2022-09-29T12:00")
+
 puts "Done Seeding Appointments"

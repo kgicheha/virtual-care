@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import BookAppointment from "./BookAppointment";
 import DoctorProfile from "./DoctorProfile";
-// import { Link } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -14,8 +12,7 @@ import {
 import { styled } from "@mui/material";
 import { red } from "@mui/material/colors";
 
-const DoctorDetails = ({ result }) => {
-
+const DoctorDetails = ({ result, handleAppt, showBookAppt }) => {
   const {
     id,
     image_url,
@@ -29,7 +26,6 @@ const DoctorDetails = ({ result }) => {
   } = result;
 
   const [docProfile, showdocProfile] = useState(false);
-  const [bookAppt, showBookAppt] = useState(false);
 
   const ratingDisplay = () => {
     let ratingArr = [];
@@ -50,16 +46,20 @@ const DoctorDetails = ({ result }) => {
     return ratingArr;
   };
 
-  const handleProfile = () => {
+  const changeToProfile = () => {
+    showdocProfile(!docProfile);
+  };
+  const changeToBookAppt = () => {
     showdocProfile(!docProfile);
   };
 
-  const handleAppts = () => {
-    showBookAppt(!bookAppt);
+  const handleNewAppts = () => {
+    showBookAppt();
+    handleAppt(id);
   };
 
-   // CUSTOM CSS
-   const CustomCard = styled(Card)({
+  // CUSTOM CSS
+  const CustomCard = styled(Card)({
     backgroundColor: "#ededed",
     height: "100%",
     display: "flex",
@@ -71,7 +71,7 @@ const DoctorDetails = ({ result }) => {
     textAlign: "center",
   });
   const Name = styled(Typography)({
-    fontWeight: "bold"
+    fontWeight: "bold",
   });
   const Stars = styled(Typography)({
     color: "#FFBF00",
@@ -86,7 +86,15 @@ const DoctorDetails = ({ result }) => {
     },
   });
   const ViewProfileButton = styled(Button)({
-    fontWeight: "bold"
+    fontWeight: "bold",
+  });
+  const ViewRatingButton = styled(Button)({
+    fontWeight: "bold",
+    backgroundColor: "#f35757",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: red[700],
+    },
   });
   //  CUSTOM CSS ^^
 
@@ -94,40 +102,49 @@ const DoctorDetails = ({ result }) => {
     <>
       <CssBaseline />
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <CustomCard >
-          <CustomCardContent >
+        <CustomCard>
+          <CustomCardContent>
             <img src={image_url} alt="profile_pic" height="100" />
             <Name variant="h6">
               Dr. {first_name} {last_name}
             </Name>
-            <Typography gutterBottom variant="h6">
-              {specialty}
-            </Typography>
-            <ViewProfileButton
-              onClick={handleProfile}
-              variant="outlined"
-            >
-              View Profile
-            </ViewProfileButton>
-            <br />
-            <br />
-            {docProfile ? <DoctorProfile result={result} /> : null}
-            <Container>
-              <Stars variant="h6">
-                {ratingDisplay()}
-              </Stars>
-              <Typography variant="body2">({total_reviews} reviews)</Typography>
-            </Container>
-            <br />
-            <CustomButton
-              onClick={handleAppts}
-              size="large"
-              variant="contained"
-              href="/oldcalendar"
-            >
-              Book
-            </CustomButton>
-            {/* {bookAppt ? <BookAppointment docId={id} /> : null} */}
+
+            {docProfile ? (
+              <>
+                <br />
+                <ViewRatingButton onClick={changeToBookAppt} variant="outlined">
+                  View Rating
+                </ViewRatingButton>
+                <br />
+                <br />
+                <DoctorProfile result={result} />
+              </>
+            ) : (
+              <>
+                <Typography gutterBottom variant="h6">
+                  {specialty}
+                </Typography>
+                <ViewProfileButton onClick={changeToProfile} variant="outlined">
+                  View Profile
+                </ViewProfileButton>
+                <br />
+                <br />
+                <Container>
+                  <Stars variant="h6">{ratingDisplay()}</Stars>
+                  <Typography variant="body2">
+                    ({total_reviews} reviews)
+                  </Typography>
+                </Container>
+                <br />
+                <CustomButton
+                  onClick={handleNewAppts}
+                  size="large"
+                  variant="contained"
+                >
+                  Book
+                </CustomButton>
+              </>
+            )}
           </CustomCardContent>
         </CustomCard>
       </Grid>

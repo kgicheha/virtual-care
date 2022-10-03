@@ -1,6 +1,11 @@
 class PatientsController < ApplicationController
     skip_before_action :authenticate_patient, only: :create
 
+    def index
+      patients = Patient.all
+      render json: patients, status: :ok
+    end
+
     def show
         patient = Patient.find_by(id: session[:patient_id])
         if patient

@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
+
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalanceOutlined";
-import { AppBar, CssBaseline, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  CssBaseline,
+  Toolbar,
+  IconButton,
+  Tooltip,
+  Box,
+  Avatar,
+  MenuItem,
+  Menu,
+} from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const NavBar = ({ currentUser, updateUser }) => {
-
   // if (currentUser !== null){
   //   const { first_name, last_name } = currentUser;
   //   const initial = first_name.slice(0, 1).toUpperCase();
@@ -55,11 +60,13 @@ const NavBar = ({ currentUser, updateUser }) => {
           <CssBaseline />
           <AppBar position="relative" />
           <Toolbar>
+          <Link to="/home">
             <MyCustomImage
               src={require("../Assets/logo.png")}
               alt="Logo"
               height="100"
             ></MyCustomImage>
+          </Link>
             <div id="customUserIcon">
               <Box
                 sx={{
@@ -78,7 +85,7 @@ const NavBar = ({ currentUser, updateUser }) => {
                     aria-expanded={open ? "true" : undefined}
                   >
                     <Avatar sx={{ width: 50, height: 50 }}>
-                    {/* {initial} */}
+                      {/* {initial} */}
                     </Avatar>
                   </IconButton>
                 </Tooltip>
@@ -119,24 +126,28 @@ const NavBar = ({ currentUser, updateUser }) => {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <MenuItem>
-                  <AccountBalanceIcon /> My Bills
-                </MenuItem>
-                <MenuItem >
-                  <CalendarMonthIcon />
-                  <a href="/oldcalender">
-                  Calendar
-                </a>
+                  <Link to="/home" style={{ textDecoration: 'none' }}>
+                  <HomeIcon />Home
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <AccountCircleIcon />
-                  Update Profile
+                  <Link to="/calender" style={{ textDecoration: 'none' }}>
+                    <CalendarMonthIcon />
+                    Calendar
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/profile" style={{ textDecoration: 'none' }}>
+                    <AccountCircleIcon />
+                    Update Profile
+                  </Link>
                 </MenuItem>
                 <MenuItem onClick={handleLogOut}>
                   <LogoutIcon />
                   Sign Out
                 </MenuItem>
               </Menu>
-              </div>
+            </div>
           </Toolbar>
         </>
       )}

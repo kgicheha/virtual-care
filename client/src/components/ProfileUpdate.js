@@ -17,8 +17,7 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-const SignUp = ({ updateUser }) => {
-  //storing data from the form
+const ProfileUpdate = ({ currentUser }) => {
   //storing data from the form
   const { register, handleSubmit } = useForm();
 
@@ -33,8 +32,8 @@ const SignUp = ({ updateUser }) => {
     console.log(data);
 
     // make post request on submit
-    fetch(`/signup`, {
-      method: "POST",
+    fetch(`/patient/${currentUser.id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -43,8 +42,7 @@ const SignUp = ({ updateUser }) => {
     }).then((res) => {
       if (res.ok) {
         res.json().then((user) => {
-          updateUser(user);
-          history.push(`/login`);
+          history.push(`/home/${currentUser.id}`);
         });
       } else {
         res.json().then((json) => setErrors(Object.entries(json.errors)));
@@ -68,23 +66,11 @@ const SignUp = ({ updateUser }) => {
       <CssBaseline />
       <div id="signUpDiv">
         <Stack spacing={2}>
-          <Container maxWidth="max-content">
-            <img
-              src={require("../Assets/logoonly.png")}
-              alt="Logo"
-              height="40"
-            />
-            <img
-              src={require("../Assets/appname.png")}
-              alt="name"
-              height="40"
-            />
-          </Container>
           <div className="customForm">
             <Container>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <br />
-                <Typography variant="h6">Create profile</Typography>
+                <Typography variant="h6">Update profile</Typography>
                 {errors
                   ? errors.map((e) => (
                       <div className="displayedErrors">
@@ -218,6 +204,7 @@ const SignUp = ({ updateUser }) => {
       </div>
     </>
   );
-};
 
-export default SignUp;
+}
+
+export default ProfileUpdate

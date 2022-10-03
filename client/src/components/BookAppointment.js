@@ -1,132 +1,176 @@
-import React, {useState} from 'react'
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { AppointmentContext } from "./App";
+import { red } from "@mui/material/colors";
+import { styled } from "@mui/material";
+import {
+  Scheduler,
+  DateNavigator,
+  TodayButton,
+  Toolbar,
+  MonthView,
+  WeekView,
+  Appointments,
+  AppointmentForm,
+  AppointmentTooltip,
+  ConfirmationDialog,
+} from "@devexpress/dx-react-scheduler-material-ui";
+import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
+import {
+  Typography,
+  FormControlLabel,
+  Paper,
+  Box,
+  Button,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+
+const BookAppointment = ({
+  currentUser,
+  doctorId,
+  showBookAppt,
+  myAppointments,
+}) => {
+
+  // const appointments = useContext(AppointmentContext);
+
+  const [currentViewName, setcurrentViewName] = useState(true);
+  //storing data from the form
+
+  //to display the errors
+  const [errors, setErrors] = useState([]);
 
 
-const BookAppointment = ({updateUser, docId}) => {
+  const handleClose = () => {
+    showBookAppt();
+  };
 
-    console.log(docId)
-    //storing data from the form
-  const [formData, setFormData] = useState({
-    appt_reason: "",
-    appt_date_time: "",
-    duration: "",
-    location: ""
-  });
+  const saveAppointment = (data) => {
+    console.log("committing changes");
+    console.log(data);
 
-   //to display the errors
-   // eslint-disable-next-line
-   const [errors, setErrors] = useState([]);
-
-   //gives you access to the history instance that you may use to navigate.
-   const history = useHistory();
-
-   const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormData(formData)
-
-    // eslint-disable-next-line
-    const apptInfo = {
-        doctor_id: docId,
-        appt_reason: formData["appt_reason"],
-        appt_date_time: Date.parse(formData["appt_date_time"])
-    }
-
-    console.log(apptInfo)
-    // make post request on submit
-    fetch(`/appointments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(apptInfo),
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then((user) => {
-          updateUser(user);
-          history.push(`/home/${user.id}`);
-        });
-      } else {
-        res.json().then(json => setErrors(Object.entries(json.errors)))
-      }
-    });
-
-    };
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (data.added.title !== "") {
+      let newAppointment = {
+        patient_id: currentUser.id,
+        doctor_id: doctorId,
+        title: data.added.title,
+        startDate: data.added.startDate,
+        endDate: data.added.endDate,
       };
+      console.log(newAppointment);
 
-      const handleCancel = () => {
-        history.push(`/home`)
-      }
+      // make post request
+      fetch(`/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(newAppointment),
+      }).then((res) => {
+        if (res.ok) {
+          res.json().then(() => {
+            showBookAppt();
+          });
+        } else {
+          res.json().then((json) => setErrors(json.errors));
+        }
+      });
+    } else {
+      showBookAppt();
+    }
+  };
+
+  const handleViewChange = () => {
+    setcurrentViewName(!currentViewName);
+  };
+  // CUSTOM CSS
+  const CustomButton = styled(Button)({
+    fontWeight: "bold",
+    backgroundColor: "#f35757",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: red[700],
+    },
+  });
+  const CustomHeader = styled(Typography)({
+    padding: "20px",
+  });
+  // CUSTOM CSS ^^
+
   return (
     <>
-    <div id="apptheader">
-    <h2>Book Appointment</h2>
-    </div>
-    <div>
-    <form id="apptform" onSubmit={handleSubmit}>
-          <br />
-          <h3 onClick={handleCancel}>✘</h3>
-          {errors ? <div className="displayederrors">{errors}</div> : null}
-          <label for="appt_reason">Reason for Visit</label><br/>
-          <input
-            type="text"
-            id="appt_reason"
-            name="appt_reason"
-            className="forminput"
-            value={formData.appt_reason}
-            onChange={handleChange}
-            placeholder="Enter Reason for Visit"
-          />
-          <br />
-          <label for="appt_date_time">Appointment Date</label><br/>
-          <input
-            type="text"
-            id="appt_date_time"
-            name="appt_date_time"
-            className="forminput"
-            value={formData.appt_date_time}
-            onChange={handleChange}
-            placeholder="MM/DD/YYYY"
-          />
-          <br />
-          <label for="duration">Duration(Hours)</label><br/>
-          <select
-            id="duration"
-            name="duration"
-            className="forminput"
-            value={formData.duration}
-            onChange={handleChange}
-          >
-            <option value="select">Select</option>
-            <option value="1">1 Hour</option>
-            <option value="2">2 Hours</option>
-            <option value="3">3 Hours</option>
-            <option value="4">4 Hours</option>
-          </select>
-          <br />
-          <label for="location">Location</label><br/>
-          <select
-            id="location"
-            name="location"
-            className="forminput"
-            value={formData.location}
-            onChange={handleChange}
-          >
-            <option value="select">Select</option>
-            <option value="Online">Online</option>
-            <option value="In-Person">In-Person</option>
-          </select>
-          <br />
-          <br />
-          <input type="submit" className="submit" value="Book Appointment"></input>
-        </form>
+      <div className="bg-modal">
+        <div className="apptScheduler">
+          <CustomHeader variant="h3">Book Appointment</CustomHeader>
+          <div>
+            <form id="apptform" onSubmit={saveAppointment}>
+              <br />
+              <Typography id="closeButton" onClick={handleClose} variant="h4">
+                ✘
+              </Typography>
+              {errors ? <div className="displayederrors">{errors}</div> : null}
+              <br />
+              <Box mb={2}>
+                <RadioGroup
+                  aria-label="Views"
+                  style={{ flexDirection: "row" }}
+                  name="views"
+                  value={currentViewName ? "Week" : "Month"}
+                  onChange={handleViewChange}
+                >
+                  <FormControlLabel
+                    value="Week"
+                    control={<Radio />}
+                    label="Week"
+                  />
+                  <FormControlLabel
+                    value="Month"
+                    control={<Radio />}
+                    label="Month"
+                  />
+                </RadioGroup>
+                <br />
+                <Paper>
+                  <Scheduler data={myAppointments} height={600}>
+                    <ViewState
+                      currentViewName={currentViewName ? "Week" : "Month"}
+                    />
+                    <EditingState
+                      allowAdding={true}
+                      onCommitChanges={saveAppointment}
+                    />
+                    <WeekView startDayHour={5} endDayHour={19} />
+                    <MonthView />
+                    <Toolbar />
+                    <DateNavigator />
+                    <TodayButton />
+                    <Appointments />
+                    <AppointmentTooltip
+                      showCloseButton
+                      showOpenButton
+                      appointmentData={myAppointments}
+                    />
+                    <AppointmentForm />
+                  </Scheduler>
+                </Paper>
+              </Box>
+              <Box mb={2}>
+                <CustomButton
+                  type="submit"
+                  size="large"
+                  variant="contained"
+                  fullWidth
+                >
+                  Book Appointment
+                </CustomButton>
+              </Box>
+            </form>
+          </div>
+        </div>
       </div>
-
     </>
-  )
-}
+  );
+};
 
-export default BookAppointment
+export default BookAppointment;

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
   ViewState,
   EditingState,
@@ -15,7 +14,7 @@ import {
   Appointments,
   AppointmentForm,
   AppointmentTooltip,
-  ConfirmationDialog
+  ConfirmationDialog,
 } from "@devexpress/dx-react-scheduler-material-ui";
 
 import {
@@ -25,10 +24,9 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const OldCalender = ({currentUser, handleApptChange, myAppointments }) => {
-  //gives you access to the history instance that you may use to navigate.
-  const history = useHistory();
+const OldCalender = ({ currentUser, handleApptChange, myAppointments }) => {
 
   //to display the errors
   const [errors, setErrors] = useState([]);
@@ -39,55 +37,29 @@ const OldCalender = ({currentUser, handleApptChange, myAppointments }) => {
     setcurrentViewName(!currentViewName);
   };
 
-  //sample data
-  let schedulerData = [
-    {
-      title: "Random",
-      startDate: "2022-10-01T10:00",
-      endDate: "2022-10-01T12:00",
-    },
-    {
-      title: "Random",
-      startDate: "2022-10-02T10:00",
-      endDate: "2022-10-02T12:00",
-    },
-  ];
-
-  const saveAppointment = (data, added, deleted, changed) => {
+ function onAppointmentChanges({ added, changed, deleted }) {
+    this.setState((state) => {
+      let { myAppointments } = state;
+      if (added) {
+        const startingAddedId = myAppointments.length > 0 ? myAppointments[myAppointments.length - 1].id + 1 : 0;
+        myAppointments = [...myAppointments, { id: startingAddedId, ...added }];
+      }
+      if (changed) {
+        myAppointments = myAppointments.map(appointment => (
+          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
+      }
+      if (deleted !== undefined) {
+        myAppointments = myAppointments.filter(appointment => appointment.id !== deleted);
+        console.log("I was deleted")
+      }
+      return { myAppointments };
+    });
+  }
+  const onAppointmentChanged = (data, ChangeSet, deleted, type) => {
     console.log("committing changes");
     console.log(data);
 
-    if (added) {
-      let newAppointment = {
-        patient_id: currentUser.id,
-        // patient_id : send doctor_id from DoctorDetails component
-        title: data.added.title,
-        startDate: data.added.startDate,
-        endDate: data.added.endDate,
-      };
-      console.log(newAppointment);
-
-      // how to also include the doctor_id and user_id
-      // make post request
-      fetch(`/appointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(newAppointment),
-      }).then((res) => {
-        if (res.ok) {
-          res.json().then(() => {
-            history.push(`/oldcalender`);
-          });
-        } else {
-          res.json().then((json) => setErrors(Object.entries(json.errors)));
-        }
-      });
-    }
-
-    if (deleted) {
+    if (ChangeSet ==="deleted") {
       console.log("I was deleted");
       //make delete request
       // fetch("/logout", {
@@ -96,24 +68,29 @@ const OldCalender = ({currentUser, handleApptChange, myAppointments }) => {
       // history.push("/oldcalender`");
     }
 
-   if (changed) {
-    console.log("I was changed");
+    if (type === "changed") {
+      console.log("I was changed");
       //make patch request
       // handleApptChange()
     }
   };
 
   ///confirm delete
-  const messages =(confirmDeleteMessage) => {
-    console.log(confirmDeleteMessage)
-    if (confirmDeleteMessage= true) {
+  const messages = (confirmDeleteMessage) => {
+    // console.log(confirmDeleteMessage);
+    if (("Delete")) {
       console.log("I was deleted");
     }
+  };
+
+  const onAppointmentDeleted = (data) => {
+
+    console.log(data);
   }
 
   return (
     <>
-      <div>
+      <div id="calender">
         <Typography variant="h3">Calender</Typography>
         <br />
         <br />
@@ -130,20 +107,21 @@ const OldCalender = ({currentUser, handleApptChange, myAppointments }) => {
       </RadioGroup>
       <br />
       <Paper>
-        <Scheduler data={schedulerData} height={960}>
+        <Scheduler data={myAppointments} height={700} onAppointmentDeleted={onAppointmentDeleted}>
           <ViewState currentViewName={currentViewName ? "Week" : "Month"} />
-          <EditingState allowAdding={true} onCommitChanges={saveAppointment} />
+          <EditingState allowAdding={true} allowDeleting={true}
+          onCommitChanges={onAppointmentDeleted} />
           <WeekView startDayHour={5} endDayHour={19} />
           <MonthView />
           <Toolbar />
           <DateNavigator />
           <TodayButton />
-          <ConfirmationDialog messages={messages}/>
+          <ConfirmationDialog messages={messages} />
           <Appointments />
           <AppointmentTooltip
             showCloseButton
             showOpenButton
-            appointmentData={schedulerData}
+            showDeleteButton
           />
           <AppointmentForm />
         </Scheduler>

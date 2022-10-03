@@ -26,7 +26,6 @@ function Login({ updateUser }) {
 
   const onSubmit = (data) => {
     // e.preventDefault();
-    console.log(data);
 
     // make post request on submit
     fetch(`/login`, {

@@ -1,37 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import DoctorContainer from "./DoctorContainer";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material";
-import { useForm } from "react-hook-form";
 import {
   Typography,
   CssBaseline,
   Container,
-  FormControl,
-  Input,
   Grid,
-  TextField
+  TextField,
 } from "@mui/material";
+import BookAppointment from "./BookAppointment";
 
-const HomePage = ({ results, setSearchWord }) => {
+const HomePage = ({ results, searchWord, setSearchWord, currentUser, myAppointments}) => {
+  const [doctorId, setDoctorId] = useState(null);
+  const [bookAppt, showBookAppt] = useState(false);
 
-  const { register, handleSubmit } = useForm();
-
-  const handleChange = (e) => {
-    e.preventDefault()
-    setSearchWord(e.target.value);
-    console.log(e.target.value)
+  const handleAppt = (docId) => {
+    showBookAppt(!bookAppt);
+    // store doctor ID,
+    setDoctorId(docId);
   };
 
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchWord(e.target.value);
+  };
 
   // CUSTOM CSS
   const CustomSearchIcon = styled(SearchIcon)({
-    float: "left",
+    float: "right",
   });
-  // const CustomSearchForm = styled(FormControl)({
-  //   float: "left",
-  // });
   const CardGrid = styled(Container)({
     padding: "60px",
     alignContent: "center",
@@ -41,14 +40,12 @@ const HomePage = ({ results, setSearchWord }) => {
   return (
     <>
       <CssBaseline />
-      <div id= 'topSection'>
+      <div id="topSection">
         <Stack spacing={2}>
           <Typography variant="h3">Book Appointment Today</Typography>
           <br />
           <Container>
-          <form
-              style={{ minWidth: 500 }}
-            >
+            <form style={{ minWidth: 500 }} id ="searchForm">
               <TextField
                 type="text"
                 variant="standard"
@@ -56,24 +53,37 @@ const HomePage = ({ results, setSearchWord }) => {
                 onChange={handleChange}
                 placeholder="Search by Doctor's Name or Specialty"
               />
+            </form>
               <CustomSearchIcon fontSize="large" />
-          </form>
           </Container>
         </Stack>
       </div>
       <br />
-      <Typography align="center" variant="h4">
-        Select a doctor of your choice
-      </Typography>
-      <br />
-      <br />
-      <>
-        <CardGrid maxWidth="max-content">
-          <Grid container spacing={4}>
-            <DoctorContainer results={results} />
-          </Grid>
-        </CardGrid>
-      </>
+      {searchWord.length > 0 ? (
+        <>
+          <Typography align="center" variant="h4">
+            Select a doctor of your choice
+          </Typography>
+          <br />
+          <br />
+          <>
+            <CardGrid maxWidth="max-content">
+              <Grid container spacing={4}>
+                <DoctorContainer
+                  results={results}
+                  handleAppt={handleAppt}
+                  showBookAppt={showBookAppt}
+                />
+              </Grid>
+            </CardGrid>
+          </>
+        </>
+      ) : (
+        <></>
+      )}
+      {bookAppt ? (
+        <BookAppointment showBookAppt={showBookAppt} doctorId={doctorId} currentUser={currentUser} myAppointments={myAppointments}/>
+      ) : null}
     </>
   );
 };

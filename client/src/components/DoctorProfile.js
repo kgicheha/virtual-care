@@ -1,4 +1,13 @@
 import React from "react";
+import {
+  Typography,
+  Button,
+  CssBaseline,
+  Grid,
+  Container,
+  Card,
+  CardContent,
+} from "@mui/material";
 
 const DoctorProfile = ({ result }) => {
   const {
@@ -14,14 +23,21 @@ const DoctorProfile = ({ result }) => {
   } = result;
   return (
     <>
-      <h4>{years_experience} Years of experience</h4>
-      <h4>{university}</h4>
-      <h4>Rate: ${hourly_rate}/ hour</h4>
-      <h4>
-        Address:{address}, {city}, {state}, {zipcode}
-      </h4>
-      <h4>Email: {email}</h4>
-      <h4>Mobile: {mobile}</h4>
+      <Typography gutterBottom variant="body2">
+        <span id="details">{years_experience}+ Years of experience</span>
+      </Typography>
+      <Typography gutterBottom variant="body2">
+        <span id="details">Rate:</span> ${hourly_rate}/ hour
+      </Typography>
+      <Typography gutterBottom variant="body2">
+        <span id="details">Address:</span> {address}, {city}, {state}, {zipcode}
+      </Typography>
+      <Typography gutterBottom variant="body2">
+        <span id="details">Email:</span> {email}
+      </Typography>
+      <Typography gutterBottom variant="body2">
+        <span id="details">Phone Number: </span>{mobile}
+      </Typography>
     </>
   );
 };

@@ -1,8 +1,8 @@
 class AppointmentsController < ApplicationController
 
     def index
-        appointment = Appointment.all
-        render json: appointment, status: :ok
+        appointments = Appointment.all
+        render json: appointments, status: :ok
     end
 
     def show
@@ -33,6 +33,6 @@ class AppointmentsController < ApplicationController
     end
 
     def appt_params
-        params.permit(:appt_date_time, :duration, :appt_reason, :location)
+        params.permit(:patient_id, :doctor_id, :title, :startDate, :endDate)
         end
 end
