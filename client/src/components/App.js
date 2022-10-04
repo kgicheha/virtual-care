@@ -9,6 +9,7 @@ import NavBar from "./NavBar";
 import SignUp from "./SignUp";
 import Calender from "./Calender";
 import ProfileUpdate from "./ProfileUpdate";
+import Payments from "./Payments";
 
 export const AppointmentContext = createContext();
 
@@ -87,6 +88,9 @@ function App() {
         {/* <AppointmentContext.Provider value={myAppointments}> */}
             <Route path="/bookappt">
               <BookAppointment />
+            </Route>
+            <Route path="/payments">
+              <Payments/>
             </Route>
             <Route path="/calender">
               <Calender

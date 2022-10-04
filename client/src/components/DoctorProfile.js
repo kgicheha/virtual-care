@@ -1,12 +1,7 @@
 import React from "react";
 import {
   Typography,
-  Button,
   CssBaseline,
-  Grid,
-  Container,
-  Card,
-  CardContent,
 } from "@mui/material";
 
 const DoctorProfile = ({ result }) => {
@@ -23,6 +18,7 @@ const DoctorProfile = ({ result }) => {
   } = result;
   return (
     <>
+      <CssBaseline />
       <Typography gutterBottom variant="body2">
         <span id="details">{years_experience}+ Years of experience</span>
       </Typography>
@@ -36,7 +32,8 @@ const DoctorProfile = ({ result }) => {
         <span id="details">Email:</span> {email}
       </Typography>
       <Typography gutterBottom variant="body2">
-        <span id="details">Phone Number: </span>{mobile}
+        <span id="details">Phone Number: </span>
+        {mobile}
       </Typography>
     </>
   );

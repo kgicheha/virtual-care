@@ -90,11 +90,6 @@ const DoctorDetails = ({ result, handleAppt, showBookAppt }) => {
   });
   const ViewRatingButton = styled(Button)({
     fontWeight: "bold",
-    backgroundColor: "#f35757",
-    color: "#ffffff",
-    "&:hover": {
-      backgroundColor: red[700],
-    },
   });
   //  CUSTOM CSS ^^
 
@@ -108,16 +103,22 @@ const DoctorDetails = ({ result, handleAppt, showBookAppt }) => {
             <Name variant="h6">
               Dr. {first_name} {last_name}
             </Name>
-
             {docProfile ? (
               <>
-                <br />
+                {/* <br /> */}
                 <ViewRatingButton onClick={changeToBookAppt} variant="outlined">
                   View Rating
                 </ViewRatingButton>
                 <br />
                 <br />
                 <DoctorProfile result={result} />
+                <CustomButton
+                  onClick={handleNewAppts}
+                  size="large"
+                  variant="contained"
+                >
+                  Book
+                </CustomButton>
               </>
             ) : (
               <>

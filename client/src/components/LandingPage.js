@@ -14,7 +14,6 @@ import { red } from "@mui/material/colors";
 import ReviewSamples from "./ReviewSamples";
 
 const LandingPage = () => {
-
   //CUSTOM CSS
   const SignInButton = styled(Button)({
     position: "absolute",
@@ -36,12 +35,15 @@ const LandingPage = () => {
   });
 
   const FirstContainer = styled(Container)({
-    padding: "80px",
-  });
-  const DoctorGif = styled(Container)({
     position: "relative",
-    left: "300px",
-    bottom: "100px",
+    width: "40%",
+    paddingTop: "90px",
+    left: "4px"
+  });
+
+ const DoctorGif = styled("img")({
+    position: "relative",
+    right: "2px",
   });
   const CustomCardGrid = styled(Container)({
     padding: "60px",
@@ -53,14 +55,14 @@ const LandingPage = () => {
     color: "#ffffff",
     padding: "80px",
   });
-    //  CUSTOM CSS ^^
+  //  CUSTOM CSS ^^
   return (
     <>
       <CssBaseline />
       <AppBar position="relative" />
       <Toolbar>
         <img
-          id ="logoImage"
+          id="logoImage"
           src={require("../Assets/logo.png")}
           alt="Logo"
           height="100"
@@ -72,11 +74,12 @@ const LandingPage = () => {
 
       <main>
         <div id="midSection">
-          <FirstContainer maxWidth="max-content">
+          <FirstContainer >
             <Typography variant="h2">
               Visit with a <br></br> doctor 24/7
             </Typography>
-            <Typography variant="body2" gutterBottom>
+            <br></br>
+            <Typography variant="body1" gutterBottom>
               Get expert advice, presciptions, and access to your medical
               records
             </Typography>
@@ -85,13 +88,13 @@ const LandingPage = () => {
               Continue
             </CustomButton>
           </FirstContainer>
-          <DoctorGif maxWidth="max-content">
-            <img
-              src={require("../Assets/doctor.gif")}
-              alt="Logo"
-              height="500"
-            />
-          </DoctorGif>
+
+          <DoctorGif
+            src={require("../Assets/doctor.gif")}
+            alt="gif"
+            height="650"
+            width="800"
+          />
         </div>
         <br />
         <div id="reviewsection">
