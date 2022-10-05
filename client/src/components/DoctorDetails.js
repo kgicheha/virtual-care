@@ -12,7 +12,7 @@ import {
 import { styled } from "@mui/material";
 import { red } from "@mui/material/colors";
 
-const DoctorDetails = ({ result, handleAppt, showBookAppt }) => {
+const DoctorDetails = ({ result, getDocId, showBookAppt }) => {
   const {
     id,
     image_url,
@@ -55,7 +55,7 @@ const DoctorDetails = ({ result, handleAppt, showBookAppt }) => {
 
   const handleNewAppts = () => {
     showBookAppt();
-    handleAppt(id);
+    getDocId(id);
   };
 
   // CUSTOM CSS

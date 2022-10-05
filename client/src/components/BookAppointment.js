@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AppointmentContext } from "./App";
+// import { AppointmentContext } from "./App";
 import { red } from "@mui/material/colors";
 import { styled } from "@mui/material";
 import {
@@ -12,7 +12,7 @@ import {
   Appointments,
   AppointmentForm,
   AppointmentTooltip,
-  ConfirmationDialog,
+  // ConfirmationDialog,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
 import {
@@ -30,24 +30,28 @@ const BookAppointment = ({
   doctorId,
   showBookAppt,
   myAppointments,
+  handleCheckoutDisplay,
+  setNewAppt
 }) => {
-
   // const appointments = useContext(AppointmentContext);
 
   const [currentViewName, setcurrentViewName] = useState(true);
-  //storing data from the form
 
   //to display the errors
   const [errors, setErrors] = useState([]);
 
+  // const [newAppt, setNewAppt] = useState([])
 
   const handleClose = () => {
     showBookAppt();
   };
 
-  const saveAppointment = (data) => {
+  const setAppointment = (data) => {
     console.log("committing changes");
     console.log(data);
+
+    showBookAppt();
+    handleCheckoutDisplay();
 
     if (data.added.title !== "") {
       let newAppointment = {
@@ -58,26 +62,10 @@ const BookAppointment = ({
         endDate: data.added.endDate,
       };
       console.log(newAppointment);
-
-      // make post request
-      fetch(`/appointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(newAppointment),
-      }).then((res) => {
-        if (res.ok) {
-          res.json().then(() => {
-            showBookAppt();
-          });
-        } else {
-          res.json().then((json) => setErrors(json.errors));
-        }
-      });
-    } else {
-      showBookAppt();
+      // setNewAppt(newAppointment)
+      // console.log(newAppt)
+      // handleAppts(newAppointment);
+      setNewAppt(newAppointment)
     }
   };
 
@@ -104,7 +92,7 @@ const BookAppointment = ({
         <div className="apptScheduler">
           <CustomHeader variant="h3">Book Appointment</CustomHeader>
           <div>
-            <form id="apptform" onSubmit={saveAppointment}>
+            <form id="apptform" onSubmit={setAppointment}>
               <br />
               <Typography id="closeButton" onClick={handleClose} variant="h4">
                 ✘
@@ -138,7 +126,7 @@ const BookAppointment = ({
                     />
                     <EditingState
                       allowAdding={true}
-                      onCommitChanges={saveAppointment}
+                      onCommitChanges={setAppointment}
                     />
                     <WeekView startDayHour={5} endDayHour={19} />
                     <MonthView />

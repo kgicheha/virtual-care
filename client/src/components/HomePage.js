@@ -3,6 +3,7 @@ import DoctorContainer from "./DoctorContainer";
 import SearchIcon from "@mui/icons-material/Search";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material";
+import { useHistory } from "react-router-dom";
 import {
   Typography,
   CssBaseline,
@@ -12,6 +13,7 @@ import {
 } from "@mui/material";
 import BookAppointment from "./BookAppointment";
 import DoctorOptions from "./DoctorOptions";
+import MakePayments from "./MakePayments";
 
 const HomePage = ({
   results,
@@ -19,19 +21,71 @@ const HomePage = ({
   setSearchWord,
   currentUser,
   myAppointments,
+  showAllAppointments,
 }) => {
   const [doctorId, setDoctorId] = useState(null);
   const [bookAppt, showBookAppt] = useState(false);
+  const [displayPayment, setDisplayPayment] = useState(false);
+  const [errors, setErrors] = useState([]);
+  //gives you access to the history instance that you may use to navigate.
+  const history = useHistory();
 
-  const handleAppt = (docId) => {
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchWord(e.target.value);
+  };
+
+  const getDocId = (docId) => {
     showBookAppt(!bookAppt);
     // store doctor ID,
     setDoctorId(docId);
   };
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSearchWord(e.target.value);
+  const handleCheckoutDisplay = () => {
+    setDisplayPayment(!displayPayment);
+  };
+
+  const [newAppt, setNewAppt] = useState(null);
+
+  const handleSubmission = () => {
+    console.log(newAppt);
+    console.log("I was submitted");
+
+    // make post request
+    fetch(`/appointments`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(newAppt),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then(
+          () => {
+            showAllAppointments(newAppt);
+          }
+          // history.push(`/home/${currentUser.id}`);
+        );
+      }
+    });
+
+    // .then(resp =>resp.json())
+    // .then(
+    //   showAllAppointments(newAppt))
+
+    // .then((res) => {
+    //   if (res.ok) {
+    //     res.json().then(() => {
+    //       alert("Appointment Booked!");
+    //       showAllAppointments(appt)
+    //       // history.push(`/home/${currentUser.id}`);
+    //     });
+    //   }
+    // else {
+    //   res.json().then((json) => setErrors(json.errors));
+    // }
+    // });
   };
 
   const getSpecialty = (name) => {
@@ -40,7 +94,7 @@ const HomePage = ({
   };
   const handleSearchBySpeciality = (e) => {
     // console.log("I was clicked");
-    console.log(e.target)
+    console.log(e.target);
   };
 
   // CUSTOM CSS
@@ -51,15 +105,7 @@ const HomePage = ({
     padding: "40px",
     alignContent: "center",
   });
-  const CardGrid2 = styled(Container)({
-    padding: "20px",
-    alignItems: "center",
-    alignContent: "center",
-  });
-  const CustomCardGrid = styled(Container)({
-    padding: "40px",
-    alignContent: "center",
-  });
+
   const CustomCardGrid2 = styled(Container)({
     padding: "20px",
     alignItems: "center",
@@ -103,7 +149,7 @@ const HomePage = ({
               <Grid container spacing={4}>
                 <DoctorContainer
                   results={results}
-                  handleAppt={handleAppt}
+                  getDocId={getDocId}
                   showBookAppt={showBookAppt}
                 />
               </Grid>
@@ -129,9 +175,18 @@ const HomePage = ({
       {bookAppt ? (
         <BookAppointment
           showBookAppt={showBookAppt}
+          handleCheckoutDisplay={handleCheckoutDisplay}
           doctorId={doctorId}
           currentUser={currentUser}
           myAppointments={myAppointments}
+          setNewAppt={setNewAppt}
+        />
+      ) : null}
+
+      {displayPayment ? (
+        <MakePayments
+          handleCheckoutDisplay={handleCheckoutDisplay}
+          handleSubmission={handleSubmission}
         />
       ) : null}
     </>

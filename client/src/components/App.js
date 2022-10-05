@@ -9,7 +9,8 @@ import NavBar from "./NavBar";
 import SignUp from "./SignUp";
 import Calender from "./Calender";
 import ProfileUpdate from "./ProfileUpdate";
-import Payments from "./Payments";
+// import Payments from "./Payments";
+import MakePayments from "./MakePayments";
 
 export const AppointmentContext = createContext();
 
@@ -20,18 +21,18 @@ function App() {
   const [results, setResults] = useState([]);
   const [myAppointments, setMyAppointments] = useState([]);
 
-   console.log(myAppointments)
+  //  console.log(myAppointments)
 
   //get patients session
-  // useEffect(() => {
-  //   if (currentUser !== null) {
-  //   fetch(`/me`)
-  //     .then((res) => res.json())
-  //     .then((patient) => {
-  //       setCurrentUser(patient);
-  //     });
-  //   }
-  // }, [currentUser]);
+  useEffect(() => {
+    fetch(`/me`)
+      .then((res) => res.json())
+      .then((patient) => {
+        if (!patient.errors) {
+          setCurrentUser(patient);
+        }
+      });
+  }, []);
 
   //fetch doctors records
   useEffect(() => {
@@ -61,63 +62,70 @@ function App() {
   //get appointments
   useEffect(() => {
     if (currentUser !== null) {
-      fetch(`/patients/${currentUser.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setMyAppointments(data.appointments);
-        });
+    fetch(`/patients/${currentUser.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.appointments);
+        setMyAppointments(data.appointments);
+      });
     }
   }, [currentUser]);
 
-
-  const handleApptChange = (appointment) => {
-    // make patch request and update myapointments
-  };
+  const showAllAppointments =(appointment) => {
+    console.log(appointment)
+    if(!myAppointments.includes(appointment)){
+      setMyAppointments([...myAppointments, appointment])
+    }
+  }
+  // const handleApptChange = (appointment) => {
+  //   // make patch request and update myapointments
+  // };
 
   return (
     <BrowserRouter>
       <div className="App">
-        <NavBar currentUser={currentUser} updateUser={setCurrentUser} />
-          <Switch>
-            <Route path="/login">
-              <Login updateUser={setCurrentUser} />
-            </Route>
-            <Route path="/signup">
-              <SignUp updateUser={setCurrentUser} />
-            </Route>
-        {/* <AppointmentContext.Provider value={myAppointments}> */}
-            <Route path="/bookappt">
-              <BookAppointment />
-            </Route>
-            <Route path="/payments">
-              <Payments/>
-            </Route>
-            <Route path="/calender">
-              <Calender
-                handleApptChange={handleApptChange}
-                myAppointments={myAppointments}
-                currentUser={currentUser}
-              />
-            </Route>
-        {/* </AppointmentContext.Provider> */}
-            <Route path="/profile">
-              <ProfileUpdate
+        {currentUser ? (
+          <NavBar currentUser={currentUser} updateUser={setCurrentUser} />
+        ) : null}
+        <Switch>
+          <Route path="/login">
+            <Login updateUser={setCurrentUser} />
+          </Route>
+          <Route path="/signup">
+            <SignUp updateUser={setCurrentUser} />
+          </Route>
+          {/* <AppointmentContext.Provider value={myAppointments}> */}
+          <Route path="/bookappt">
+            <BookAppointment />
+          </Route>
+          <Route path="/payments">
+            <MakePayments />
+          </Route>
+          <Route path="/calender">
+            <Calender
+              // handleApptChange={handleApptChange}
+              myAppointments={myAppointments}
               currentUser={currentUser}
-              />
-            </Route>
-            <Route path="/home">
-              <HomePage
-                setSearchWord={setSearchWord}
-                searchWord={searchWord}
-                results={SearchTerm}
-                currentUser={currentUser}
-                myAppointments={myAppointments}
-              />
-            </Route>
-            <Route path="/">
-              <LandingPage />
-            </Route>
-          </Switch>
+            />
+          </Route>
+          {/* </AppointmentContext.Provider> */}
+          <Route path="/profile">
+            <ProfileUpdate currentUser={currentUser} />
+          </Route>
+          <Route path="/home">
+            <HomePage
+              setSearchWord={setSearchWord}
+              searchWord={searchWord}
+              results={SearchTerm}
+              currentUser={currentUser}
+              myAppointments={myAppointments}
+              showAllAppointments={showAllAppointments}
+            />
+          </Route>
+          <Route path="/">
+            <LandingPage />
+          </Route>
+        </Switch>
       </div>
     </BrowserRouter>
   );

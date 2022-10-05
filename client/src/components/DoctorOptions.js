@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material";
 
-const DoctorOptions = ({getSpecialty}) => {
-
+const DoctorOptions = ({ getSpecialty }) => {
   const passSpecialityName = (e) => {
     // console.log(e.target)
     // getSpecialty(e.target.name)
@@ -24,6 +23,7 @@ const DoctorOptions = ({getSpecialty}) => {
     },
     {
       name: "Therapist",
+      image_url: "../Assets/therapy.png",
     },
     {
       name: "Dermatologist",
@@ -62,14 +62,17 @@ const DoctorOptions = ({getSpecialty}) => {
   return options.map((option) => (
     <>
       <CssBaseline />
-      <CustomCardGrid item xs={6} sm={4} md={4} lg={2} onClick={passSpecialityName}>
+      <CustomCardGrid
+        item
+        xs={6}
+        sm={4}
+        md={4}
+        lg={2}
+        onClick={passSpecialityName}
+      >
         <CustomCard>
           <CustomCardContent>
-            <img
-              src={require("../Assets/familydoc.png")}
-              alt="options"
-              height="100"
-            ></img>
+            <img  src={require("../Assets/familydoc.png")} alt="options" height="100"></img>
             <Typography gutterBottom variant="h6">
               {option.name}
             </Typography>

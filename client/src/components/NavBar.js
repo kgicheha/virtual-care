@@ -53,13 +53,10 @@ const NavBar = ({ currentUser, updateUser }) => {
 
   return (
     <div>
-      {currentUser === null ? (
-        <></>
-      ) : (
-        <>
-          <CssBaseline />
-          <AppBar position="relative" />
-          <Toolbar>
+      <>
+        <CssBaseline />
+        <AppBar position="relative" />
+        <Toolbar>
           <Link to="/home">
             <MyCustomImage
               src={require("../Assets/logo.png")}
@@ -67,90 +64,90 @@ const NavBar = ({ currentUser, updateUser }) => {
               height="100"
             ></MyCustomImage>
           </Link>
-            <div id="customUserIcon">
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                <Tooltip title="Account Information">
-                  <IconButton
-                    onClick={handleClick}
-                    size="large"
-                    sx={{ ml: 2 }}
-                    aria-controls={open ? "account-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                  >
-                    <Avatar sx={{ width: 50, height: 50 }}>
-                      {/* {initial} */}
-                    </Avatar>
-                  </IconButton>
-                </Tooltip>
-              </Box>
-              <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={open}
-                onClose={handleClose}
-                onClick={handleClose}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
-                    "&:before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      top: 0,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
+          <div id="customUserIcon">
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <Tooltip title="Account Information">
+                <IconButton
+                  onClick={handleClick}
+                  size="large"
+                  sx={{ ml: 2 }}
+                  aria-controls={open ? "account-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                >
+                  <Avatar sx={{ width: 50, height: 50 }}>
+                    {/* {initial} */}
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+            </Box>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
+              onClick={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
                   },
-                }}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-              >
-                <MenuItem>
-                  <Link to="/home" style={{ textDecoration: 'none' }}>
-                  <HomeIcon />Home
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="/calender" style={{ textDecoration: 'none' }}>
-                    <CalendarMonthIcon />
-                    Calendar
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="/profile" style={{ textDecoration: 'none' }}>
-                    <AccountCircleIcon />
-                    Update Profile
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleLogOut}>
-                  <LogoutIcon />
-                  Sign Out
-                </MenuItem>
-              </Menu>
-            </div>
-          </Toolbar>
-        </>
-      )}
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem>
+                <Link to="/home" style={{ textDecoration: "none" }}>
+                  <HomeIcon />
+                  Home
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/calender" style={{ textDecoration: "none" }}>
+                  <CalendarMonthIcon />
+                  Calendar
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/profile" style={{ textDecoration: "none" }}>
+                  <AccountCircleIcon />
+                  Update Profile
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleLogOut}>
+                <LogoutIcon />
+                Sign Out
+              </MenuItem>
+            </Menu>
+          </div>
+        </Toolbar>
+      </>
     </div>
   );
 };

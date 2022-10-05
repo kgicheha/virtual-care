@@ -22,9 +22,9 @@ const DoctorProfile = ({ result }) => {
       <Typography gutterBottom variant="body2">
         <span id="details">{years_experience}+ Years of experience</span>
       </Typography>
-      <Typography gutterBottom variant="body2">
+      {/* <Typography gutterBottom variant="body2">
         <span id="details">Rate:</span> ${hourly_rate}/ hour
-      </Typography>
+      </Typography> */}
       <Typography gutterBottom variant="body2">
         <span id="details">Address:</span> {address}, {city}, {state}, {zipcode}
       </Typography>
