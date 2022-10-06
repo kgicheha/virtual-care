@@ -79,9 +79,8 @@ const LandingPage = () => {
               Visit with a <br></br> doctor 24/7
             </Typography>
             <br></br>
-            <Typography variant="body1" gutterBottom>
-              Get expert advice, presciptions, and access to your medical
-              records
+            <Typography variant="h6" gutterBottom>
+              Get expert advice, presciptions for only $49.99 per visit
             </Typography>
             <br />
             <CustomButton size="large" variant="contained" href="/login">

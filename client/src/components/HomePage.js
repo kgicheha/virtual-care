@@ -61,12 +61,14 @@ const HomePage = ({
       body: JSON.stringify(newAppt),
     }).then((res) => {
       if (res.ok) {
-        res.json().then(
-          () => {
+        res
+          .json()
+          .then(() => {
             showAllAppointments(newAppt);
-          }
-          // history.push(`/home/${currentUser.id}`);
-        );
+          })
+          .then(() => {
+            history.push(`/home/${currentUser.id}`);
+          });
       }
     });
 

@@ -86,11 +86,11 @@ const MakePayments = ({ handleCheckoutDisplay, handleSubmission }) => {
                 </Box>
                 <Box mb={2}>
                   <TextField
-                    type="text"
+                    type="txt_cardNumber"
                     label="Number"
                     fullWidth
                     variant="outlined"
-                    placeholder="Card Number"
+                    placeholder="1234 1234 1234 1234"
                     //   {...register("email")}
                   />
                 </Box>

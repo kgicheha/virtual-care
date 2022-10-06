@@ -90,7 +90,7 @@ function Login({ updateUser }) {
                 <br />
                 <Box mb={2}>
                   <TextField
-                    type="text"
+                    type="email"
                     label="email"
                     fullWidth
                     variant="outlined"

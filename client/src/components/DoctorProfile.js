@@ -19,7 +19,7 @@ const DoctorProfile = ({ result }) => {
   return (
     <>
       <CssBaseline />
-      <Typography gutterBottom variant="body2">
+      <Typography gutterBottom variant="body1">
         <span id="details">{years_experience}+ Years of experience</span>
       </Typography>
       {/* <Typography gutterBottom variant="body2">

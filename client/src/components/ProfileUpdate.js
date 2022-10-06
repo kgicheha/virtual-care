@@ -27,12 +27,16 @@ const ProfileUpdate = ({ currentUser }) => {
   //gives you access to the history instance that you may use to navigate.
   const history = useHistory();
 
+  const notification = () => {
+    alert("Profile Updated!");
+  };
+
   const onSubmit = (data) => {
     // e.preventDefault();
     console.log(data);
 
     // make post request on submit
-    fetch(`/patient/${currentUser.id}`, {
+    fetch(`/patients/${currentUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -41,9 +45,14 @@ const ProfileUpdate = ({ currentUser }) => {
       body: JSON.stringify(data),
     }).then((res) => {
       if (res.ok) {
-        res.json().then((user) => {
-          history.push(`/home/${currentUser.id}`);
-        });
+        res
+          .json()
+          .then(() => {
+            notification();
+          })
+          .then(() => {
+            history.push(`/home/${currentUser.id}`);
+          });
       } else {
         res.json().then((json) => setErrors(Object.entries(json.errors)));
       }
@@ -66,6 +75,18 @@ const ProfileUpdate = ({ currentUser }) => {
       <CssBaseline />
       <div id="signUpDiv">
         <Stack spacing={2}>
+          <Container maxWidth="max-content">
+            <img
+              src={require("../Assets/logoonly.png")}
+              alt="Logo"
+              height="40"
+            />
+            <img
+              src={require("../Assets/appname.png")}
+              alt="name"
+              height="40"
+            />
+          </Container>
           <div className="customForm">
             <Container>
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -204,7 +225,6 @@ const ProfileUpdate = ({ currentUser }) => {
       </div>
     </>
   );
+};
 
-}
-
-export default ProfileUpdate
+export default ProfileUpdate;
